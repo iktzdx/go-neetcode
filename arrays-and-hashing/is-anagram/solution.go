@@ -1,18 +1,14 @@
 package validanagram
 
 func IsAnagram(s string, t string) bool {
-	// A slice of integers representing the amount of appearances
-	// of each of the 26 lowercase English letters.
-	chars := make([]int, 26)
+	chars := make(map[rune]int)
 
 	for _, v := range s {
-		i := (v - 'a')
-		chars[i]++
+		chars[v]++
 	}
 
 	for _, v := range t {
-		i := (v - 'a')
-		chars[i]--
+		chars[v]--
 	}
 
 	// If chars contains only zeros, then it's anagram.
