@@ -1,27 +1,26 @@
 package validanagram
 
-import "sort"
-
 func IsAnagram(s string, t string) bool {
-	return sortStringByCharacters(s) == sortStringByCharacters(t)
-}
-
-func stringToRuneSlice(s string) []rune {
-	res := make([]rune, len(s))
+	// A slice of integers representing the amount of appearances
+	// of each of the 26 lowercase English letters.
+	chars := make([]int, 26)
 
 	for _, v := range s {
-		res = append(res, v)
+		i := (v - 'a')
+		chars[i]++
 	}
 
-	return res
-}
+	for _, v := range t {
+		i := (v - 'a')
+		chars[i]--
+	}
 
-func sortStringByCharacters(s string) string {
-	r := stringToRuneSlice(s)
+	// If chars contains only zeros, then it's anagram.
+	for _, v := range chars {
+		if v != 0 {
+			return false
+		}
+	}
 
-	sort.Slice(r, func(i, j int) bool {
-		return r[i] < r[j]
-	})
-
-	return string(r)
+	return true
 }
