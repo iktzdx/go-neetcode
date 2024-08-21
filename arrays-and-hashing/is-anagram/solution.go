@@ -1,42 +1,27 @@
 package validanagram
 
+import "sort"
+
 func IsAnagram(s string, t string) bool {
-	if s == t {
-		return true
-	}
-
-	if len(s) != len(t) {
-		return false
-	}
-
-	if compareMaps(countChars(s), countChars(t)) {
-		return true
-	}
-
-	return false
+	return sortStringByCharacters(s) == sortStringByCharacters(t)
 }
 
-func countChars(s string) map[rune]int {
-	result := make(map[rune]int)
+func stringToRuneSlice(s string) []rune {
+	res := make([]rune, len(s))
 
-	for _, ch := range s {
-		result[ch]++
+	for _, v := range s {
+		res = append(res, v)
 	}
 
-	return result
+	return res
 }
 
-func compareMaps(x, y map[rune]int) bool {
-	for k, xv := range x {
-		yv, ok := y[k]
-		if !ok {
-			return false
-		}
+func sortStringByCharacters(s string) string {
+	r := stringToRuneSlice(s)
 
-		if xv != yv {
-			return false
-		}
-	}
+	sort.Slice(r, func(i, j int) bool {
+		return r[i] < r[j]
+	})
 
-	return true
+	return string(r)
 }
