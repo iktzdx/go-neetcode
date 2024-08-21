@@ -8,15 +8,12 @@ func IsAnagram(s string, t string) bool {
 	}
 
 	for _, v := range t {
+		if count, exists := chars[v]; !exists || count == 0 {
+			return false
+		}
+
 		chars[v]--
 	}
 
-	// If chars contains only zeros, then it's anagram.
-	for _, v := range chars {
-		if v != 0 {
-			return false
-		}
-	}
-
-	return true
+	return len(s) == len(t)
 }
