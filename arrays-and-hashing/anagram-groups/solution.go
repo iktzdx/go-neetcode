@@ -7,33 +7,27 @@ func GroupAnagrams(strs []string) [][]string {
 		return [][]string{strs}
 	}
 
-	storage := make(map[string][]string, 0)
+	groups := make([][]string, 0)
+	indexes := make(map[string]int, 0)
 
 	for _, val := range strs {
 		key := makeUniqueKey(val)
 
-		group := storage[key]
-		if len(group) == 0 {
-			storage[key] = []string{val}
+		if idx, found := indexes[key]; !found {
+			indexes[key] = len(groups)
+			groups = append(groups, []string{val})
 		} else {
-			storage[key] = append(group, val)
+			groups[idx] = append(groups[idx], val)
 		}
-	}
-
-	idx := 0
-	groups := make([][]string, len(storage))
-	for _, group := range storage {
-		groups[idx] = group
-		idx++
 	}
 
 	return groups
 }
 
 func makeUniqueKey(s string) string {
-	keyBytes := []byte(s)
+	key := []byte(s)
 
-	slices.Sort(keyBytes)
+	slices.Sort(key)
 
-	return string(keyBytes)
+	return string(key)
 }
