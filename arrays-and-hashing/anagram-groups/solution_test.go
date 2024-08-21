@@ -25,6 +25,10 @@ func Test_GroupAnagrams(t *testing.T) {
 			strs: []string{""},
 			want: [][]string{{""}},
 		},
+		"with unicode characters": {
+			strs: []string{"колба", "карат", "бокал", "карта", "монета", "катар"},
+			want: [][]string{{"монета"}, {"карат", "карта", "катар"}, {"колба", "бокал"}},
+		},
 	}
 
 	for name, test := range tests {
@@ -38,6 +42,10 @@ func Test_GroupAnagrams(t *testing.T) {
 }
 
 func compareGroups(t *testing.T, want, got [][]string) bool {
+	sort.Slice(want, func(i, j int) bool {
+		return len(want[i]) < len(want[j])
+	})
+
 	sort.Slice(got, func(i, j int) bool {
 		return len(got[i]) < len(got[j])
 	})
