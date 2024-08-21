@@ -1,21 +1,16 @@
 package twosum
 
 func TwoSum(nums []int, target int) []int {
-	idxs := make([]int, 2)
-	storage := make(map[int]int, len(nums))
+	storage := make(map[int]int, 0)
 
 	for i, v := range nums {
-		sub := target - nums[i]
-
-		idx, exists := storage[sub]
+		idx, exists := storage[target-v]
 		if exists {
-			idxs[0], idxs[1] = idx, i
-
-			break
+			return []int{idx, i}
 		}
 
 		storage[v] = i
 	}
 
-	return idxs
+	return []int{}
 }
