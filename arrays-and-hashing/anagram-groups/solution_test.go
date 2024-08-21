@@ -1,6 +1,7 @@
 package anagramgroups_test
 
 import (
+	"slices"
 	"sort"
 	"testing"
 
@@ -29,6 +30,10 @@ func Test_GroupAnagrams(t *testing.T) {
 			strs: []string{"колба", "карат", "бокал", "карта", "монета", "катар"},
 			want: [][]string{{"монета"}, {"карат", "карта", "катар"}, {"колба", "бокал"}},
 		},
+		"no anagrams": {
+			strs: []string{"cab", "tin", "pew", "duh", "may", "ill", "buy", "bar", "max", "doc"},
+			want: [][]string{{"max"}, {"buy"}, {"doc"}, {"may"}, {"ill"}, {"duh"}, {"tin"}, {"bar"}, {"pew"}, {"cab"}},
+		},
 	}
 
 	for name, test := range tests {
@@ -43,10 +48,24 @@ func Test_GroupAnagrams(t *testing.T) {
 
 func compareGroups(t *testing.T, want, got [][]string) bool {
 	sort.Slice(want, func(i, j int) bool {
+		if len(want[i]) == len(want[j]) {
+			slices.Sort(want[i])
+			slices.Sort(want[j])
+
+			return want[i][0] < want[j][0]
+		}
+
 		return len(want[i]) < len(want[j])
 	})
 
 	sort.Slice(got, func(i, j int) bool {
+		if len(got[i]) == len(got[j]) {
+			slices.Sort(got[i])
+			slices.Sort(got[j])
+
+			return got[i][0] < got[j][0]
+		}
+
 		return len(got[i]) < len(got[j])
 	})
 
