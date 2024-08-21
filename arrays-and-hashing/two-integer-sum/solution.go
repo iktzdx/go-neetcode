@@ -3,22 +3,19 @@ package twosum
 func TwoSum(nums []int, target int) []int {
 	idxs := make([]int, 2)
 
-	idx := 0
-	for i := idx + 1; i < len(nums); i++ {
-		if i == idx {
-			continue
-		}
+	storage := make(map[int]int, len(nums))
+	for i, v := range nums {
+		// If there are 2 equal elements in the slice,
+		// save the index of the last one.
+		storage[v] = i
+	}
 
-		sum := nums[idx] + nums[i]
-		if target == sum {
-			idxs[0], idxs[1] = idx, i
+	for i := range nums {
+		sub := target - nums[i]
+		if idx, exists := storage[sub]; exists && idx != i {
+			idxs[0], idxs[1] = i, idx
 
 			break
-		}
-
-		if i == len(nums)-1 {
-			idx++
-			i = 0
 		}
 	}
 
