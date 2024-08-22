@@ -17,16 +17,17 @@ func TopKFrequent(nums []int, k int) []int {
 
 	result := make([]int, 0)
 	for i := len(bucket) - 1; i > 0; i-- {
-		if len(result) == k {
-			break
-		}
-
-		num := bucket[i]
-		if len(num) == 0 {
+		if len(bucket[i]) == 0 {
 			continue
 		}
 
-		result = append(result, num...)
+		for _, num := range bucket[i] {
+			if len(result) == k {
+				return result
+			}
+
+			result = append(result, num)
+		}
 	}
 
 	return result
