@@ -1,68 +1,33 @@
 package topkelementsinlist
 
-import (
-	"container/heap"
-)
-
-type (
-	Item struct {
-		key   int
-		value int
-	}
-
-	MinHeap []*Item
-)
-
-func (h MinHeap) Len() int {
-	return len(h)
-}
-
-func (h MinHeap) Less(i, j int) bool {
-	return h[i].value < h[j].value
-}
-
-func (h MinHeap) Swap(i, j int) {
-	h[i], h[j] = h[j], h[i]
-}
-
-func (h *MinHeap) Push(x any) {
-	*h = append(*h, x.(*Item))
-}
-
-func (h *MinHeap) Pop() any {
-	old := *h
-	n := len(old)
-	x := old[n-1]
-	*h = old[:n-1]
-
-	return x
-}
-
 func TopKFrequent(nums []int, k int) []int {
 	if len(nums) < 2 {
 		return nums
 	}
 
-	freqs := make(map[int]int, k)
+	freqs := make(map[int]int, 0)
 	for _, n := range nums {
 		freqs[n]++
 	}
 
-	h := &MinHeap{}
-	heap.Init(h)
-
-	for k, v := range freqs {
-		heap.Push(h, &Item{key: k, value: v})
+	bucket := make([][]int, len(nums)+1)
+	for num, count := range freqs {
+		bucket[count] = append(bucket[count], num)
 	}
 
-	for h.Len() > k {
-		heap.Pop(h)
+	result := make([]int, 0)
+	for i := len(bucket) - 1; i > 0; i-- {
+		if len(result) == k {
+			break
+		}
+
+		num := bucket[i]
+		if len(num) == 0 {
+			continue
+		}
+
+		result = append(result, num...)
 	}
 
-	res := make([]int, 0)
-	for _, el := range *h {
-		res = append(res, el.key)
-	}
-
-	return res
+	return result
 }
