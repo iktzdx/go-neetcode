@@ -18,6 +18,11 @@ func TestTopKFrequent(t *testing.T) {
 			k:    2,
 			want: []int{1, 2},
 		},
+		"want all the numbers": {
+			nums: []int{1, 1, 1, 2, 2, 3},
+			k:    3,
+			want: []int{1, 2, 3},
+		},
 		"only one element": {
 			nums: []int{1},
 			k:    1,
