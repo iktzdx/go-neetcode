@@ -33,6 +33,11 @@ func TestTopKFrequent(t *testing.T) {
 			k:    0,
 			want: []int{},
 		},
+		"negative numbers": {
+			nums: []int{-1, -1},
+			k:    1,
+			want: []int{-1},
+		},
 	}
 
 	for name, test := range tests {
