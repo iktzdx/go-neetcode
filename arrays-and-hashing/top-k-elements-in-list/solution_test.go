@@ -38,6 +38,16 @@ func TestTopKFrequent(t *testing.T) {
 			k:    1,
 			want: []int{-1},
 		},
+		"with zeroes": {
+			nums: []int{12, 12, 0, 0, 0, 43, 56},
+			k:    2,
+			want: []int{0, 12},
+		},
+		"input without duplicate numbers": {
+			nums: []int{11, 22, 33},
+			k:    3,
+			want: []int{11, 22, 33},
+		},
 	}
 
 	for name, test := range tests {
