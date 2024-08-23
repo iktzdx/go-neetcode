@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	twosum "github.com/iktzdx/go-neetcode/arrays-and-hashing/two-integer-sum"
+	solution "github.com/iktzdx/go-neetcode/arrays-and-hashing/two-integer-sum"
 )
 
 func Test_TwoSum(t *testing.T) {
@@ -47,7 +47,7 @@ func Test_TwoSum(t *testing.T) {
 
 	for name, test := range tests {
 		t.Run(name, func(t *testing.T) {
-			got := twosum.TwoSum(test.nums, test.target)
+			got := solution.TwoSum(test.nums, test.target)
 			if !reflect.DeepEqual(test.want, got) {
 				t.Fatalf("TwoSum(%v, %d), expect = %v, got = %v", test.nums, test.target, test.want, got)
 			}

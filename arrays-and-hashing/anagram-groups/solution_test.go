@@ -6,7 +6,7 @@ import (
 	"slices"
 	"testing"
 
-	anagramgroups "github.com/iktzdx/go-neetcode/arrays-and-hashing/anagram-groups"
+	solution "github.com/iktzdx/go-neetcode/arrays-and-hashing/anagram-groups"
 )
 
 func Test_GroupAnagrams(t *testing.T) {
@@ -38,7 +38,7 @@ func Test_GroupAnagrams(t *testing.T) {
 
 	for name, test := range tests {
 		t.Run(name, func(t *testing.T) {
-			got := anagramgroups.GroupAnagrams(test.strs)
+			got := solution.GroupAnagrams(test.strs)
 			if !compareGroups(test.want, got) {
 				t.Fatalf("GroupAnagrams(%v): expected = %v, got = %v", test.strs, test.want, got)
 			}

@@ -3,7 +3,7 @@ package duplicateinteger_test
 import (
 	"testing"
 
-	duplicateinteger "github.com/iktzdx/go-neetcode/arrays-and-hashing/duplicate-integer"
+	solution "github.com/iktzdx/go-neetcode/arrays-and-hashing/duplicate-integer"
 )
 
 func Test_FindDuplicate(t *testing.T) {
@@ -27,7 +27,7 @@ func Test_FindDuplicate(t *testing.T) {
 
 	for name, test := range tests {
 		t.Run(name, func(t *testing.T) {
-			got := duplicateinteger.FindDuplicate(test.input)
+			got := solution.FindDuplicate(test.input)
 			if test.want != got {
 				t.Fatalf("FindDuplicate(%v), expected = %d, got = %d", test.input, test.want, got)
 			}

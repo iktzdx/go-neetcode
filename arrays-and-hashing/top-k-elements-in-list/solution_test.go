@@ -3,7 +3,7 @@ package topkelementsinlist_test
 import (
 	"testing"
 
-	topkelementsinlist "github.com/iktzdx/go-neetcode/arrays-and-hashing/top-k-elements-in-list"
+	solution "github.com/iktzdx/go-neetcode/arrays-and-hashing/top-k-elements-in-list"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -52,7 +52,7 @@ func TestTopKFrequent(t *testing.T) {
 
 	for name, test := range tests {
 		t.Run(name, func(t *testing.T) {
-			got := topkelementsinlist.TopKFrequent(test.nums, test.k)
+			got := solution.TopKFrequent(test.nums, test.k)
 			if !assert.ElementsMatch(t, test.want, got) {
 				t.Errorf("TopKFrequent(%v, %d): expected = %v, got = %v", test.nums, test.k, test.want, got)
 			}

@@ -3,7 +3,7 @@ package validanagram_test
 import (
 	"testing"
 
-	validanagram "github.com/iktzdx/go-neetcode/arrays-and-hashing/is-anagram"
+	solution "github.com/iktzdx/go-neetcode/arrays-and-hashing/is-anagram"
 )
 
 func Test_IsAnagram(t *testing.T) {
@@ -41,7 +41,7 @@ func Test_IsAnagram(t *testing.T) {
 
 	for name, test := range tests {
 		t.Run(name, func(t *testing.T) {
-			got := validanagram.IsAnagram(test.input, test.compareWith)
+			got := solution.IsAnagram(test.input, test.compareWith)
 			if test.want != got {
 				t.Fatalf("IsAnagram(%s, %s), expect = %v, got = %v\n", test.input, test.compareWith, test.want, got)
 			}
