@@ -25,7 +25,7 @@ func Decode(str string) []string {
 
 	for start < len(rs) {
 		end := start
-		for rs[end] != rune(delimiter) {
+		for rs[end] != delimiter {
 			end++
 		}
 
