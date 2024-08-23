@@ -24,6 +24,14 @@ func Test_EncodeDecodeString(t *testing.T) {
 			input: []string{""},
 			want:  []string{""},
 		},
+		"contains delimiter": {
+			input: []string{"hello", "d#l#m#t#r"},
+			want:  []string{"hello", "d#l#m#t#r"},
+		},
+		"contains word's length and delimiter": {
+			input: []string{"5hel#o", "w4#rld"},
+			want:  []string{"5hel#o", "w4#rld"},
+		},
 	}
 
 	for name, test := range tests {
