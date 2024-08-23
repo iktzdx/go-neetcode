@@ -28,6 +28,10 @@ func Test_EncodeString(t *testing.T) {
 			input: []string{"5#input"},
 			want:  "7#5#input",
 		},
+		"double digit length": {
+			input: []string{"bibliophilistic"},
+			want:  "15#bibliophilistic",
+		},
 	}
 
 	for name, test := range tests {
@@ -60,6 +64,10 @@ func Test_DecodeString(t *testing.T) {
 		"contains delimiter and length": {
 			input: "7#5#input",
 			want:  []string{"5#input"},
+		},
+		"double digit length": {
+			input: "15#bibliophilistic",
+			want:  []string{"bibliophilistic"},
 		},
 	}
 
@@ -97,6 +105,10 @@ func Test_EncodeDecodeString(t *testing.T) {
 		"contains delimiter and length": {
 			input: []string{"5hel#o", "w4#rld"},
 			want:  []string{"5hel#o", "w4#rld"},
+		},
+		"double digit length": {
+			input: []string{"bibliophilistic"},
+			want:  []string{"bibliophilistic"},
 		},
 	}
 
