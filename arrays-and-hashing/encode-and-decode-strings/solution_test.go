@@ -69,6 +69,10 @@ func Test_DecodeString(t *testing.T) {
 			input: "15#bibliophilistic",
 			want:  []string{"bibliophilistic"},
 		},
+		"wrong input": {
+			input: "ff#wronginput",
+			want:  []string{},
+		},
 	}
 
 	for name, test := range tests {
