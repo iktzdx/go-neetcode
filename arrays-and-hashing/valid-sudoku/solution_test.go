@@ -80,6 +80,77 @@ func Test_IsValidSudoku(t *testing.T) {
 	}
 }
 
+func Test_CheckRow(t *testing.T) {
+	tests := map[string]struct {
+		row  []byte
+		want bool
+	}{
+		"valid row": {
+			row:  []byte{'5', '3', '.', '.', '7', '.', '.', '.', '.'},
+			want: true,
+		},
+		"invalid row": {
+			row:  []byte{'.', '.', '.', '4', '8', '9', '.', '.', '8'},
+			want: false,
+		},
+	}
+
+	for name, test := range tests {
+		t.Run(name, func(t *testing.T) {
+			got := solution.CheckRow(test.row)
+			if test.want != got {
+				t.Fatalf("CheckRow(%v): expected = %v, got = %v", test.row, test.want, got)
+			}
+		})
+	}
+}
+
+func Test_CheckColumn(t *testing.T) {
+	tests := map[string]struct {
+		board [][]byte
+		want  bool
+	}{
+		"valid column": {
+			board: [][]byte{
+				{'1', '2', '.', '.', '3', '.', '.', '.', '.'},
+				{'4', '.', '.', '5', '.', '.', '.', '.', '.'},
+				{'.', '9', '8', '.', '.', '.', '.', '.', '3'},
+				{'5', '.', '.', '.', '6', '.', '.', '.', '4'},
+				{'.', '.', '.', '8', '.', '3', '.', '.', '5'},
+				{'7', '.', '.', '.', '2', '.', '.', '.', '6'},
+				{'.', '.', '.', '.', '.', '.', '2', '.', '.'},
+				{'.', '.', '.', '4', '1', '9', '.', '.', '8'},
+				{'.', '.', '.', '.', '8', '.', '.', '7', '9'},
+			},
+			want: true,
+		},
+		"invalid column": {
+			board: [][]byte{
+				{'1', '2', '.', '.', '3', '.', '.', '.', '.'},
+				{'4', '.', '.', '5', '.', '.', '.', '.', '.'},
+				{'.', '9', '8', '.', '.', '.', '.', '.', '3'},
+				{'5', '.', '.', '.', '6', '.', '.', '.', '4'},
+				{'.', '.', '.', '8', '.', '3', '.', '.', '5'},
+				{'7', '.', '.', '.', '2', '.', '.', '.', '6'},
+				{'.', '.', '.', '.', '.', '.', '2', '.', '.'},
+				{'.', '.', '.', '5', '1', '9', '.', '.', '8'},
+				{'.', '.', '.', '.', '8', '.', '.', '7', '9'},
+			},
+			want: false,
+		},
+	}
+
+	for name, test := range tests {
+		t.Run(name, func(t *testing.T) {
+			got := solution.CheckColumn(test.board)
+			if test.want != got {
+				boardStr := formatBoard(test.board)
+				t.Fatalf("CheckColumn(%v): expected = %v, got = %v", boardStr, test.want, got)
+			}
+		})
+	}
+}
+
 func formatBoard(board [][]byte) string {
 	result := "\n"
 	for i := 0; i < len(board); i++ {
