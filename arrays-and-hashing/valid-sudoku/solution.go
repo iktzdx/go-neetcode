@@ -2,10 +2,29 @@ package validsudoku
 
 const (
 	boardSideLength int  = 9
+	boxSideLength   int  = 3
 	emptyCell       byte = '.'
 )
 
 func IsValidSudoku(board [][]byte) bool {
+	for _, row := range board {
+		if !CheckRow(row) {
+			return false
+		}
+	}
+
+	if !CheckColumns(board) {
+		return false
+	}
+
+	if !CheckBoxes(board) {
+		return false
+	}
+
+	return true
+}
+
+func CheckBoxes(board [][]byte) bool {
 	return false
 }
 
@@ -23,7 +42,7 @@ func CheckRow(row []byte) bool {
 	return true
 }
 
-func CheckColumn(board [][]byte) bool {
+func CheckColumns(board [][]byte) bool {
 	colMap := make(map[byte]struct{}, boardSideLength)
 
 	for colIdx := 0; colIdx < boardSideLength; colIdx++ {
