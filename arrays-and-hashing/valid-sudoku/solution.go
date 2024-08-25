@@ -11,7 +11,34 @@ func IsValidSudoku(board [][]byte) bool {
 }
 
 func CheckBoxes(board [][]byte) bool {
-	return false
+	boxMap := make(map[byte]struct{}, boardSideLength)
+
+	var rowIdx, colIdx int
+	for colIdx < boardSideLength {
+		if colIdx%boxSideLength == 0 && colIdx != 0 {
+			rowIdx++
+			colIdx -= boxSideLength
+		}
+
+		if rowIdx%boxSideLength == 0 && rowIdx != 0 {
+			clear(boxMap)
+		}
+
+		if rowIdx == boardSideLength {
+			rowIdx = 0
+			colIdx += boxSideLength
+		}
+
+		boxVal := board[rowIdx][colIdx]
+		if _, exists := boxMap[boxVal]; exists && boxVal != emptyCell {
+			return false
+		}
+
+		boxMap[boxVal] = struct{}{}
+		colIdx++
+	}
+
+	return true
 }
 
 func CheckRows(board [][]byte) bool {
