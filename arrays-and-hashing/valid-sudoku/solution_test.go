@@ -80,26 +80,47 @@ func Test_IsValidSudoku(t *testing.T) {
 	}
 }
 
-func Test_CheckRow(t *testing.T) {
+func Test_CheckRows(t *testing.T) {
 	tests := map[string]struct {
-		row  []byte
-		want bool
+		board [][]byte
+		want  bool
 	}{
-		"valid row": {
-			row:  []byte{'5', '3', '.', '.', '7', '.', '.', '.', '.'},
+		"valid rows": {
+			board: [][]byte{
+				{'5', '3', '.', '.', '7', '.', '.', '.', '.'},
+				{'6', '.', '.', '1', '9', '5', '.', '.', '.'},
+				{'.', '9', '8', '.', '.', '.', '.', '6', '.'},
+				{'8', '.', '.', '.', '6', '.', '.', '.', '3'},
+				{'4', '.', '.', '8', '.', '3', '.', '.', '1'},
+				{'7', '.', '.', '.', '2', '.', '.', '.', '6'},
+				{'.', '6', '.', '.', '.', '.', '2', '8', '.'},
+				{'.', '.', '.', '4', '1', '9', '.', '.', '5'},
+				{'.', '.', '.', '.', '8', '.', '.', '7', '9'},
+			},
 			want: true,
 		},
-		"invalid row": {
-			row:  []byte{'.', '.', '.', '4', '8', '9', '.', '.', '8'},
+		"invalid rows": {
+			board: [][]byte{
+				{'5', '3', '.', '.', '7', '.', '.', '.', '.'},
+				{'6', '.', '.', '1', '9', '5', '.', '.', '.'},
+				{'.', '9', '8', '.', '.', '.', '.', '9', '.'},
+				{'8', '.', '.', '.', '6', '.', '.', '.', '3'},
+				{'4', '.', '.', '8', '.', '3', '.', '.', '1'},
+				{'7', '.', '.', '.', '2', '.', '.', '.', '6'},
+				{'.', '6', '.', '.', '.', '.', '2', '8', '.'},
+				{'.', '.', '.', '4', '1', '9', '.', '.', '5'},
+				{'.', '.', '.', '.', '8', '.', '.', '7', '9'},
+			},
 			want: false,
 		},
 	}
 
 	for name, test := range tests {
 		t.Run(name, func(t *testing.T) {
-			got := solution.CheckRow(test.row)
+			got := solution.CheckRows(test.board)
+			boardStr := formatBoard(test.board)
 			if test.want != got {
-				t.Fatalf("CheckRow(%v): expected = %v, got = %v", test.row, test.want, got)
+				t.Fatalf("CheckRows(%s): expected = %v, got = %v", boardStr, test.want, got)
 			}
 		})
 	}
@@ -110,7 +131,7 @@ func Test_CheckColumns(t *testing.T) {
 		board [][]byte
 		want  bool
 	}{
-		"valid column": {
+		"valid columns": {
 			board: [][]byte{
 				{'1', '2', '.', '.', '3', '.', '.', '.', '.'},
 				{'4', '.', '.', '5', '.', '.', '.', '.', '.'},
@@ -124,7 +145,7 @@ func Test_CheckColumns(t *testing.T) {
 			},
 			want: true,
 		},
-		"invalid column": {
+		"invalid columns": {
 			board: [][]byte{
 				{'1', '2', '.', '.', '3', '.', '.', '.', '.'},
 				{'4', '.', '.', '5', '.', '.', '.', '.', '.'},
