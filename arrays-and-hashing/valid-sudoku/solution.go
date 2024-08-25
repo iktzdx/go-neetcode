@@ -1,76 +1,17 @@
 package validsudoku
 
-import (
-	"fmt"
-)
-
 const (
 	boardSideLength int  = 9
 	boxSideLength   int  = 3
 	emptyCell       byte = '.'
 )
 
-type (
-	rowsHashSet  map[int][]byte
-	colsHashSet  map[int][]byte
-	boxesHashSet map[string][]byte
-)
-
-func (h *boxesHashSet) add(k string, v byte) {
-	set := *h
-	set[k] = append(set[k], v)
-	*h = set
-}
-
-func (h *boxesHashSet) contains(k string, target byte) bool {
-	set := *h
-	for _, val := range set[k] {
-		if val == target {
-			return true
-		}
-	}
-
-	return false
-}
-
-func (h *rowsHashSet) add(k int, v byte) {
-	set := *h
-	set[k] = append(set[k], v)
-	*h = set
-}
-
-func (h *rowsHashSet) contains(k int, target byte) bool {
-	set := *h
-	for _, val := range set[k] {
-		if val == target {
-			return true
-		}
-	}
-
-	return false
-}
-
-func (h *colsHashSet) add(k int, v byte) {
-	set := *h
-	set[k] = append(set[k], v)
-	*h = set
-}
-
-func (h *colsHashSet) contains(k int, target byte) bool {
-	set := *h
-	for _, val := range set[k] {
-		if val == target {
-			return true
-		}
-	}
-
-	return false
-}
-
 func IsValidSudoku(board [][]byte) bool {
-	rows := &rowsHashSet{}
-	cols := &colsHashSet{}
-	boxes := &boxesHashSet{}
+	var (
+		rows  [boardSideLength][boardSideLength]bool
+		cols  [boardSideLength][boardSideLength]bool
+		boxes [boxSideLength][boxSideLength][boardSideLength]bool
+	)
 
 	for row := 0; row < boardSideLength; row++ {
 		for col := 0; col < boardSideLength; col++ {
@@ -78,27 +19,15 @@ func IsValidSudoku(board [][]byte) bool {
 				continue
 			}
 
-			if rows.contains(row, board[row][col]) {
+			v := int(board[row][col]-'0') - 1
+
+			if rows[row][v] || cols[col][v] || boxes[row/boxSideLength][col/boxSideLength][v] {
 				return false
 			}
 
-			if cols.contains(col, board[row][col]) {
-				return false
-			}
-
-			if boxes.contains(hashKey(row, col), board[row][col]) {
-				return false
-			}
-
-			rows.add(row, board[row][col])
-			cols.add(col, board[row][col])
-			boxes.add(hashKey(row, col), board[row][col])
+			rows[row][v], cols[col][v], boxes[row/3][col/3][v] = true, true, true
 		}
 	}
 
 	return true
-}
-
-func hashKey(row, col int) string {
-	return fmt.Sprintf("%d,%d", row/boxSideLength, col/boxSideLength)
 }
