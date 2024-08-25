@@ -20,12 +20,12 @@ func CheckBoxes(board [][]byte) bool {
 			colIdx -= boxSideLength
 		}
 
-		if rowIdx%boxSideLength == 0 && rowIdx != 0 {
+		if (rowIdx%boxSideLength == 0 && rowIdx != 0) && (colIdx%boxSideLength == 0) {
 			clear(boxMap)
 		}
 
 		if rowIdx == boardSideLength {
-			rowIdx = 0
+			rowIdx -= boardSideLength
 			colIdx += boxSideLength
 		}
 
