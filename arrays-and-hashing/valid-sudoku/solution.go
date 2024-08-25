@@ -25,7 +25,7 @@ func IsValidSudoku(board [][]byte) bool {
 				return false
 			}
 
-			rows[row][v], cols[col][v], boxes[row/3][col/3][v] = true, true, true
+			rows[row][v], cols[col][v], boxes[row/boxSideLength][col/boxSideLength][v] = true, true, true
 		}
 	}
 
