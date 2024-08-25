@@ -105,7 +105,7 @@ func Test_CheckRow(t *testing.T) {
 	}
 }
 
-func Test_CheckColumn(t *testing.T) {
+func Test_CheckColumns(t *testing.T) {
 	tests := map[string]struct {
 		board [][]byte
 		want  bool
@@ -142,10 +142,56 @@ func Test_CheckColumn(t *testing.T) {
 
 	for name, test := range tests {
 		t.Run(name, func(t *testing.T) {
-			got := solution.CheckColumn(test.board)
+			got := solution.CheckColumns(test.board)
 			if test.want != got {
 				boardStr := formatBoard(test.board)
-				t.Fatalf("CheckColumn(%v): expected = %v, got = %v", boardStr, test.want, got)
+				t.Fatalf("CheckColumns(%v): expected = %v, got = %v", boardStr, test.want, got)
+			}
+		})
+	}
+}
+
+func Test_CheckBoxes(t *testing.T) {
+	tests := map[string]struct {
+		board [][]byte
+		want  bool
+	}{
+		"valid boxes": {
+			board: [][]byte{
+				{'1', '2', '.', '.', '3', '.', '.', '.', '.'},
+				{'4', '.', '.', '5', '.', '.', '.', '.', '.'},
+				{'.', '9', '8', '.', '.', '.', '.', '.', '3'},
+				{'5', '.', '.', '.', '6', '.', '.', '.', '4'},
+				{'.', '.', '.', '8', '.', '3', '.', '.', '5'},
+				{'7', '.', '.', '.', '2', '.', '.', '.', '6'},
+				{'.', '.', '.', '.', '.', '.', '2', '.', '.'},
+				{'.', '.', '.', '4', '1', '9', '.', '.', '8'},
+				{'.', '.', '.', '.', '8', '.', '.', '7', '9'},
+			},
+			want: true,
+		},
+		"invalid boxes": {
+			board: [][]byte{
+				{'1', '2', '.', '.', '3', '.', '.', '.', '.'},
+				{'4', '.', '.', '5', '.', '.', '.', '.', '.'},
+				{'.', '9', '1', '.', '.', '.', '.', '.', '3'},
+				{'5', '.', '.', '.', '6', '.', '.', '.', '4'},
+				{'.', '.', '.', '8', '.', '3', '.', '.', '5'},
+				{'7', '.', '.', '.', '2', '.', '.', '.', '6'},
+				{'.', '.', '.', '.', '.', '.', '2', '.', '.'},
+				{'.', '.', '.', '4', '1', '9', '.', '.', '8'},
+				{'.', '.', '.', '.', '8', '.', '.', '7', '9'},
+			},
+			want: false,
+		},
+	}
+
+	for name, test := range tests {
+		t.Run(name, func(t *testing.T) {
+			got := solution.CheckBoxes(test.board)
+			if test.want != got {
+				boardStr := formatBoard(test.board)
+				t.Fatalf("CheckBoxes(%s): expected = %v, got = %v", boardStr, test.want, got)
 			}
 		})
 	}
