@@ -1,88 +1,104 @@
 package validsudoku
 
+import (
+	"fmt"
+)
+
 const (
 	boardSideLength int  = 9
 	boxSideLength   int  = 3
 	emptyCell       byte = '.'
 )
 
+type (
+	rowsHashSet  map[int][]byte
+	colsHashSet  map[int][]byte
+	boxesHashSet map[string][]byte
+)
+
+func (h *boxesHashSet) add(k string, v byte) {
+	set := *h
+	set[k] = append(set[k], v)
+	*h = set
+}
+
+func (h *boxesHashSet) contains(k string, target byte) bool {
+	set := *h
+	for _, val := range set[k] {
+		if val == target {
+			return true
+		}
+	}
+
+	return false
+}
+
+func (h *rowsHashSet) add(k int, v byte) {
+	set := *h
+	set[k] = append(set[k], v)
+	*h = set
+}
+
+func (h *rowsHashSet) contains(k int, target byte) bool {
+	set := *h
+	for _, val := range set[k] {
+		if val == target {
+			return true
+		}
+	}
+
+	return false
+}
+
+func (h *colsHashSet) add(k int, v byte) {
+	set := *h
+	set[k] = append(set[k], v)
+	*h = set
+}
+
+func (h *colsHashSet) contains(k int, target byte) bool {
+	set := *h
+	for _, val := range set[k] {
+		if val == target {
+			return true
+		}
+	}
+
+	return false
+}
+
 func IsValidSudoku(board [][]byte) bool {
-	return CheckRows(board) && CheckColumns(board) && CheckBoxes(board)
-}
+	rows := &rowsHashSet{}
+	cols := &colsHashSet{}
+	boxes := &boxesHashSet{}
 
-func CheckBoxes(board [][]byte) bool {
-	boxMap := make(map[byte]struct{}, boardSideLength)
+	for row := 0; row < boardSideLength; row++ {
+		for col := 0; col < boardSideLength; col++ {
+			if board[row][col] == emptyCell {
+				continue
+			}
 
-	var rowIdx, colIdx int
-	for colIdx <= boardSideLength {
-		if colIdx%boxSideLength == 0 && colIdx != 0 {
-			rowIdx++
-			colIdx -= boxSideLength
-
-		}
-
-		if (rowIdx%boxSideLength == 0 && rowIdx != 0) && (colIdx%boxSideLength == 0) {
-			clear(boxMap)
-		}
-
-		if rowIdx == boardSideLength {
-			rowIdx -= boardSideLength
-			colIdx += boxSideLength
-		}
-
-		var boxVal byte
-		if colIdx == boardSideLength {
-			boxVal = board[rowIdx][colIdx-1]
-		} else {
-			boxVal = board[rowIdx][colIdx]
-		}
-
-		if _, exists := boxMap[boxVal]; exists && boxVal != emptyCell {
-			return false
-		}
-
-		boxMap[boxVal] = struct{}{}
-
-		colIdx++
-	}
-
-	return true
-}
-
-func CheckRows(board [][]byte) bool {
-	rowMap := make(map[byte]struct{}, boardSideLength)
-
-	for rowIdx := 0; rowIdx < boardSideLength; rowIdx++ {
-		for colIdx := 0; colIdx < boardSideLength; colIdx++ {
-			rowVal := board[rowIdx][colIdx]
-			if _, exists := rowMap[rowVal]; exists && rowVal != emptyCell {
+			if rows.contains(row, board[row][col]) {
 				return false
 			}
 
-			rowMap[rowVal] = struct{}{}
+			if cols.contains(col, board[row][col]) {
+				return false
+			}
 
+			if boxes.contains(hashKey(row, col), board[row][col]) {
+				return false
+			}
+
+			rows.add(row, board[row][col])
+			cols.add(col, board[row][col])
+			boxes.add(hashKey(row, col), board[row][col])
 		}
-
-		clear(rowMap)
 	}
 
 	return true
 }
 
-func CheckColumns(board [][]byte) bool {
-	colMap := make(map[byte]struct{}, boardSideLength)
-
-	for colIdx := 0; colIdx < boardSideLength; colIdx++ {
-		for rowIdx := 0; rowIdx < boardSideLength; rowIdx++ {
-			colVal := board[rowIdx][colIdx]
-			if _, exists := colMap[colVal]; exists && colVal != emptyCell {
-				return false
-			}
-
-			colMap[colVal] = struct{}{}
-		}
-		clear(colMap)
-	}
-
-	return true
+func hashKey(row, col int) string {
+	return fmt.Sprintf("%d,%d", row/boxSideLength, col/boxSideLength)
 }
