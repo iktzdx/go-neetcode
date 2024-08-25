@@ -14,10 +14,11 @@ func CheckBoxes(board [][]byte) bool {
 	boxMap := make(map[byte]struct{}, boardSideLength)
 
 	var rowIdx, colIdx int
-	for colIdx < boardSideLength {
+	for colIdx <= boardSideLength {
 		if colIdx%boxSideLength == 0 && colIdx != 0 {
 			rowIdx++
 			colIdx -= boxSideLength
+
 		}
 
 		if (rowIdx%boxSideLength == 0 && rowIdx != 0) && (colIdx%boxSideLength == 0) {
@@ -29,12 +30,19 @@ func CheckBoxes(board [][]byte) bool {
 			colIdx += boxSideLength
 		}
 
-		boxVal := board[rowIdx][colIdx]
+		var boxVal byte
+		if colIdx == boardSideLength {
+			boxVal = board[rowIdx][colIdx-1]
+		} else {
+			boxVal = board[rowIdx][colIdx]
+		}
+
 		if _, exists := boxMap[boxVal]; exists && boxVal != emptyCell {
 			return false
 		}
 
 		boxMap[boxVal] = struct{}{}
+
 		colIdx++
 	}
 
