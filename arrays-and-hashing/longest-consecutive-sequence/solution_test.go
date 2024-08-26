@@ -47,6 +47,14 @@ func Test_LongestConsecutive(t *testing.T) {
 			nums: []int{-3, -2, -1, 0, 1, 2, 3},
 			want: 7,
 		},
+		"have multiple sequences #1": {
+			nums: []int{0, 3, 2, 1, 100, 200, 5, 6, 7},
+			want: 4,
+		},
+		"have multiple sequences #2": {
+			nums: []int{3, 2, 1, 100, 200, 8, 5, 6, 7},
+			want: 4,
+		},
 	}
 
 	for name, test := range tests {
