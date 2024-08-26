@@ -1,24 +1,28 @@
 package longestconsecutivesequence
 
-import (
-	"slices"
-)
-
 func LongestConsecutive(nums []int) int {
 	if len(nums) < 2 {
 		return len(nums)
 	}
 
-	slices.Sort(nums)
-
 	longest := 1
-	for i := 0; i < len(nums)-1; i++ {
-		length := 0
-		for i+length < len(nums) && nums[i] == nums[i+length]-length {
-			length++
-		}
+	numsMap := make(map[int]struct{}, len(nums))
 
-		longest = max(longest, length)
+	for _, n := range nums {
+		numsMap[n] = struct{}{}
+	}
+
+	for _, n := range nums {
+		if _, ok := numsMap[n-1]; !ok { // check if it's the start of the sequence
+			length := 0
+			for length < len(nums) {
+				if _, ok := numsMap[n+length]; !ok { // search for the end of the sequence
+					break
+				}
+				length++
+			}
+			longest = max(longest, length)
+		}
 	}
 
 	return longest
