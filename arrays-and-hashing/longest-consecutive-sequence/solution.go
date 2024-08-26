@@ -1,6 +1,8 @@
 package longestconsecutivesequence
 
-import "slices"
+import (
+	"slices"
+)
 
 func LongestConsecutive(nums []int) int {
 	if len(nums) < 2 {
@@ -9,12 +11,15 @@ func LongestConsecutive(nums []int) int {
 
 	slices.Sort(nums)
 
-	counter := 1
+	longest := 1
 	for i := 0; i < len(nums)-1; i++ {
-		if nums[i] == nums[i+1]-1 {
-			counter++ // FIX: The counter is not reset if there is more than 1 sequence.
+		length := 0
+		for i+length < len(nums) && nums[i] == nums[i+length]-length {
+			length++
 		}
+
+		longest = max(longest, length)
 	}
 
-	return counter
+	return longest
 }
