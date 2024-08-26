@@ -6,19 +6,16 @@ func LongestConsecutive(nums []int) int {
 	}
 
 	longest := 1
-	numsMap := make(map[int]struct{}, len(nums))
+	numsMap := make(map[int]bool, len(nums))
 
 	for _, n := range nums {
-		numsMap[n] = struct{}{}
+		numsMap[n] = true
 	}
 
 	for _, n := range nums {
-		if _, ok := numsMap[n-1]; !ok { // check if it's the start of the sequence
+		if !numsMap[n-1] { // check if it's the start of the sequence
 			length := 0
-			for length < len(nums) {
-				if _, ok := numsMap[n+length]; !ok { // search for the end of the sequence
-					break
-				}
+			for numsMap[n+length] { // search for the end of the sequence
 				length++
 			}
 			longest = max(longest, length)
