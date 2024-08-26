@@ -43,6 +43,10 @@ func Test_LongestConsecutive(t *testing.T) {
 			nums: []int{1, 1, 1, 1, 1, 1, 1, 1},
 			want: 1,
 		},
+		"from n to n+1 - sorted": {
+			nums: []int{-3, -2, -1, 0, 1, 2, 3},
+			want: 7,
+		},
 	}
 
 	for name, test := range tests {
