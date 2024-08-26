@@ -13,13 +13,16 @@ func LongestConsecutive(nums []int) int {
 	}
 
 	for _, n := range nums {
-		if !numsMap[n-1] { // check if it's the start of the sequence
-			length := 0
-			for numsMap[n+length] { // search for the end of the sequence
-				length++
-			}
-			longest = max(longest, length)
+		if numsMap[n+1] { // search for the end of the sequence
+			continue
 		}
+
+		length := 0
+		for curr := n; numsMap[curr]; curr-- { // check if it's the start of the sequence
+			length++
+		}
+
+		longest = max(longest, length)
 	}
 
 	return longest
