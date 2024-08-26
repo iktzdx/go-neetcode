@@ -5,14 +5,13 @@ func LongestConsecutive(nums []int) int {
 		return len(nums)
 	}
 
-	longest := 1
-	numsMap := make(map[int]bool, len(nums))
-
+	numsMap := map[int]bool{}
 	for _, n := range nums {
 		numsMap[n] = true
 	}
 
-	for _, n := range nums {
+	longest := 1
+	for n := range numsMap { // loop through the map is faster
 		if numsMap[n+1] { // search for the end of the sequence
 			continue
 		}
