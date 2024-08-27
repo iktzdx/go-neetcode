@@ -2,23 +2,22 @@ package validparentheses
 
 type stack []rune
 
-func (s *stack) len() int {
-	return len(*s)
-}
-
 func (s *stack) push(val rune) {
 	*s = append(*s, val)
 }
 
-func (s *stack) pop() rune {
+func (s *stack) pop() {
+	if !s.isEmpty() {
+		*s = (*s)[:len(*s)-1]
+	}
+}
+
+func (s *stack) top() rune {
 	if s.isEmpty() {
 		return -1
 	}
 
-	last := (*s)[s.len()-1]
-	*s = (*s)[:s.len()-1]
-
-	return last
+	return (*s)[len(*s)-1]
 }
 
 func (s *stack) isEmpty() bool {
@@ -39,14 +38,12 @@ func IsValid(s string) bool {
 			return false
 		}
 
-		if !found {
-			stack.push(val)
+		if found && stack.top() == match {
+			stack.pop()
 			continue
 		}
 
-		if last := stack.pop(); last != match {
-			return false
-		}
+		stack.push(val)
 	}
 
 	return stack.isEmpty()
