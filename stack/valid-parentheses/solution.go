@@ -33,13 +33,13 @@ func IsValid(s string) bool {
 	pairs := map[rune]rune{']': '[', ')': '(', '}': '{'}
 
 	for _, val := range s {
-		match, found := pairs[val]
-		switch {
-		case found && stack.isEmpty():
-			return false
-		case found && stack.top() == match:
-			stack.pop()
-		default:
+		if match, found := pairs[val]; found {
+			if !stack.isEmpty() && stack.top() == match {
+				stack.pop()
+			} else {
+				return false
+			}
+		} else {
 			stack.push(val)
 		}
 	}
