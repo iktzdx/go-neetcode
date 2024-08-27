@@ -35,8 +35,24 @@ func Test_IsValid(t *testing.T) {
 			input: "(]",
 			want:  false,
 		},
-		"invalid nested parentheses": {
+		"closed in the wrong order": {
 			input: "([{)]}",
+			want:  false,
+		},
+		"invalid - no open brackets": {
+			input: "))}}]]",
+			want:  false,
+		},
+		"invalid - no closed brackets": {
+			input: "(({{[[",
+			want:  false,
+		},
+		"invalid - the opposite order": {
+			input: ")(",
+			want:  false,
+		},
+		"invalid - odd number of brackets": {
+			input: "(({{[[]]}))",
 			want:  false,
 		},
 	}
