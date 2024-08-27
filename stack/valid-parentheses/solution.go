@@ -5,16 +5,15 @@ func IsValid(s string) bool {
 		return false
 	}
 
-	brackets := map[string]string{"}": "{", ")": "(", "]": "["}
-
-	if _, found := brackets[string(s[0])]; found {
-		return false
-	}
-
 	stack := []string{}
+	brackets := map[string]string{"}": "{", ")": "(", "]": "["}
 
 	for _, val := range s {
 		match, found := brackets[string(val)]
+		if found && len(stack) == 0 {
+			return false
+		}
+
 		if found && match == stack[len(stack)-1] {
 			stack = stack[:len(stack)-1]
 			continue
