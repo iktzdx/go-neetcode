@@ -5,11 +5,11 @@ func IsValid(s string) bool {
 		return false
 	}
 
-	stack := []string{}
-	brackets := map[string]string{"}": "{", ")": "(", "]": "["}
+	stack := []rune{}
+	brackets := map[rune]rune{'}': '{', ')': '(', ']': '['}
 
 	for _, val := range s {
-		match, found := brackets[string(val)]
+		match, found := brackets[val]
 		if found && len(stack) == 0 {
 			return false
 		}
@@ -19,7 +19,7 @@ func IsValid(s string) bool {
 			continue
 		}
 
-		stack = append(stack, string(val))
+		stack = append(stack, val)
 	}
 
 	return len(stack) == 0
