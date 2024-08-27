@@ -55,6 +55,10 @@ func Test_IsValid(t *testing.T) {
 			input: "(({{[[]]}))",
 			want:  false,
 		},
+		"invalid - wrong order in the end": {
+			input: "(){}}{",
+			want:  false,
+		},
 	}
 
 	for name, test := range tests {
