@@ -34,16 +34,14 @@ func IsValid(s string) bool {
 
 	for _, val := range s {
 		match, found := pairs[val]
-		if found && stack.isEmpty() {
+		switch {
+		case found && stack.isEmpty():
 			return false
-		}
-
-		if found && stack.top() == match {
+		case found && stack.top() == match:
 			stack.pop()
-			continue
+		default:
+			stack.push(val)
 		}
-
-		stack.push(val)
 	}
 
 	return stack.isEmpty()
