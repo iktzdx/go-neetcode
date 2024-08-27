@@ -6,21 +6,36 @@ func IsValid(s string) bool {
 	}
 
 	stack := []rune{}
-	brackets := map[rune]rune{'}': '{', ')': '(', ']': '['}
 
 	for _, val := range s {
-		match, found := brackets[val]
-		if found && len(stack) == 0 {
-			return false
-		}
+		switch val {
+		case '[', '(', '{':
+			stack = append(stack, val)
+		case ']', ')', '}':
+			if len(stack) == 0 {
+				return false
+			}
 
-		if found && match == stack[len(stack)-1] {
+			if !isMatching(stack[len(stack)-1], val) {
+				return false
+			}
+
 			stack = stack[:len(stack)-1]
-			continue
 		}
-
-		stack = append(stack, val)
 	}
 
 	return len(stack) == 0
+}
+
+func isMatching(o, c rune) bool {
+	switch o {
+	case '[':
+		return c == ']'
+	case '{':
+		return c == '}'
+	case '(':
+		return c == ')'
+	}
+
+	return false
 }
