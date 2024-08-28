@@ -1,43 +1,65 @@
 package minstack
 
+type stack []int
+
+func (s *stack) push(val int) {
+	*s = append(*s, val)
+}
+
+func (s *stack) len() int {
+	return len(*s)
+}
+
+func (s *stack) isEmpty() bool {
+	return s.len() == 0
+}
+
+func (s *stack) pop() {
+	if !s.isEmpty() {
+		*s = (*s)[:s.len()-1]
+	}
+}
+
+func (s *stack) top() int {
+	return (*s)[s.len()-1]
+}
+
 type MinStack struct {
-	data      []int
-	minValues []int
+	data      stack
+	minValues stack
 }
 
 func Constructor() MinStack {
 	return MinStack{
-		data:      make([]int, 0),
-		minValues: make([]int, 0),
+		data:      make(stack, 0),
+		minValues: make(stack, 0),
 	}
 }
 
 func (s *MinStack) Push(val int) {
-	s.data = append(s.data, val)
+	s.data.push(val)
 
-	if len(s.minValues) == 0 || val <= s.minValues[len(s.minValues)-1] {
-		s.minValues = append(s.minValues, val)
+	if s.minValues.isEmpty() || val <= s.minValues.top() {
+		s.minValues.push(val)
 	}
 }
 
 func (s *MinStack) Pop() {
-	last := s.data[s.Len()-1]
-
-	if last <= s.minValues[len(s.minValues)-1] {
-		s.minValues = s.minValues[:len(s.minValues)-1]
+	if s.data.top() <= s.minValues.top() {
+		s.minValues.pop()
 	}
 
-	s.data = s.data[:s.Len()-1]
+	s.data.pop()
 }
 
 func (s *MinStack) Top() int {
-	return s.data[s.Len()-1]
+	return s.data.top()
 }
 
 func (s *MinStack) GetMin() int {
-	return s.minValues[len(s.minValues)-1]
+	return s.minValues.top()
 }
 
 func (s *MinStack) Len() int {
-	return len(s.data)
+	return s.data.len()
 }
