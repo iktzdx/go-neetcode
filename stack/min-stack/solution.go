@@ -39,17 +39,17 @@ func Constructor() MinStack {
 func (s *MinStack) Push(val int) {
 	s.data.push(val)
 
-	if s.minValues.isEmpty() || val <= s.minValues.top() {
-		s.minValues.push(val)
+	minVal := val
+	if !s.minValues.isEmpty() {
+		minVal = min(s.minValues.top(), val)
 	}
+
+	s.minValues.push(minVal)
 }
 
 func (s *MinStack) Pop() {
-	if s.data.top() <= s.minValues.top() {
-		s.minValues.pop()
-	}
-
 	s.data.pop()
+	s.minValues.pop()
 }
 
 func (s *MinStack) Top() int {
