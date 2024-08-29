@@ -3,47 +3,38 @@ package evaluatereversepolishnotation
 import "strconv"
 
 func EvalRPN(tokens []string) int {
-	if len(tokens) == 1 {
-		val, _ := strconv.Atoi(tokens[0])
+	result, _ := strconv.Atoi(tokens[0])
+	stack := make([]string, 0)
 
-		return val
-	}
+	for _, token := range tokens {
+		if token != "+" && token != "-" && token != "*" && token != "/" {
+			stack = append(stack, token)
 
-	stack := []int{}
-
-	for i := 0; i < len(tokens); i++ {
-		for tokens[i] != "+" && tokens[i] != "-" && tokens[i] != "*" && tokens[i] != "/" {
-			val, _ := strconv.Atoi(tokens[i])
-			stack = append(stack, val)
-
-			i++
+			continue
 		}
 
-		a := stack[len(stack)-1]
+		result = calc(stack[len(stack)-2], stack[len(stack)-1], token)
 		stack = stack[:len(stack)-1]
-
-		b := stack[len(stack)-1]
-		stack = stack[:len(stack)-1]
-
-		stack = append(stack, calc(b, a, tokens[i]))
+		stack[len(stack)-1] = strconv.Itoa(result)
 	}
 
-	return stack[len(stack)-1]
+	return result
 }
 
-func calc(a, b int, op string) int {
-	if op == "+" {
-		return a + b
-	}
-	if op == "-" {
-		return a - b
-	}
-	if op == "*" {
-		return a * b
-	}
-	if op == "/" {
-		return a / b
+func calc(a, b, op string) int {
+	aInt, _ := strconv.Atoi(a)
+	bInt, _ := strconv.Atoi(b)
+
+	switch op {
+	case "+":
+		return aInt + bInt
+	case "-":
+		return aInt - bInt
+	case "*":
+		return aInt * bInt
+	case "/":
+		return aInt / bInt
 	}
 
-	return -1 // for compiler
+	return 0 // for compiler
 }
