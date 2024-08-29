@@ -10,10 +10,9 @@ func EvalRPN(tokens []string) int {
 	}
 
 	stack := []int{}
-	operators := map[string]bool{"+": true, "-": true, "*": true, "/": true}
 
 	for i := 0; i < len(tokens); i++ {
-		for !operators[tokens[i]] {
+		for tokens[i] != "+" && tokens[i] != "-" && tokens[i] != "*" && tokens[i] != "/" {
 			val, _ := strconv.Atoi(tokens[i])
 			stack = append(stack, val)
 
@@ -33,14 +32,16 @@ func EvalRPN(tokens []string) int {
 }
 
 func calc(a, b int, op string) int {
-	switch op {
-	case "+":
+	if op == "+" {
 		return a + b
-	case "-":
+	}
+	if op == "-" {
 		return a - b
-	case "*":
+	}
+	if op == "*" {
 		return a * b
-	case "/":
+	}
+	if op == "/" {
 		return a / b
 	}
 
