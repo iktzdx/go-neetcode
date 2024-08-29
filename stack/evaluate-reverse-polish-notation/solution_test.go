@@ -11,6 +11,10 @@ func Test_EvalRPN(t *testing.T) {
 		input []string
 		want  int
 	}{
+		"single element": {
+			input: []string{"18"},
+			want:  18,
+		},
 		"simple addition - (a+b)": {
 			input: []string{"3", "4", "+"},
 			want:  7,
