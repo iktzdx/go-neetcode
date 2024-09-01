@@ -31,6 +31,12 @@ func Test_CarFleet(t *testing.T) {
 			speed:    []int{4, 2, 1},
 			want:     1,
 		},
+		"two cars - one fleet": {
+			target:   10,
+			position: []int{6, 8},
+			speed:    []int{3, 2},
+			want:     1,
+		},
 	}
 
 	for name, test := range tests {
