@@ -1,29 +1,23 @@
 package carfleet
 
-import (
-	"sort"
-)
-
 func CarFleet(target int, position []int, speed []int) int {
-	var pairs [][2]int
-	for idx, val := range position {
-		pairs = append(pairs, [2]int{val, speed[idx]})
+	if len(position) < 2 {
+		return 1
 	}
 
-	sort.SliceStable(pairs, func(i, j int) bool {
-		return pairs[i][0] < pairs[j][0]
-	})
+	times := make([]float32, target)
+	for idx, pos := range position {
+		times[pos] = float32(target-pos) / float32(speed[idx])
+	}
 
-	var stack []int
-	for i := len(pairs) - 1; i >= 0; i-- {
-		t := (target - pairs[i][0]) / pairs[i][1]
-
-		if len(stack) > 0 && stack[len(stack)-1] >= t {
-			continue
+	var fleets int
+	var fastest float32
+	for i := target - 1; i >= 0; i-- {
+		if times[i] > fastest {
+			fastest = times[i]
+			fleets++
 		}
-
-		stack = append(stack, t)
 	}
 
-	return len(stack)
+	return fleets
 }

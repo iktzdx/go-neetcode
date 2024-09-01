@@ -35,7 +35,7 @@ func Test_CarFleet(t *testing.T) {
 			target:   10,
 			position: []int{6, 8},
 			speed:    []int{3, 2},
-			want:     1,
+			want:     2,
 		},
 	}
 
