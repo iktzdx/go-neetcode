@@ -23,6 +23,10 @@ func Test_IsPalindrome(t *testing.T) {
 			input: " ",
 			want:  true,
 		},
+		"all non-alphanumeric": {
+			input: ",.",
+			want:  true,
+		},
 	}
 
 	for name, test := range tests {
