@@ -59,6 +59,11 @@ func Test_TwoSum(t *testing.T) {
 			target:  12,
 			want:    []int{2, 6},
 		},
+		"in the middle": {
+			numbers: []int{1, 3, 4, 5, 7, 11},
+			target:  9,
+			want:    []int{3, 4},
+		},
 	}
 
 	for name, test := range tests {
