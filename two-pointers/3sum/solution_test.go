@@ -25,9 +25,13 @@ func Test_ThreeSum(t *testing.T) {
 			nums: []int{0, 0, 0},
 			want: [][]int{{0, 0, 0}},
 		},
-		"contains duplicates": {
+		"contains a duplicate": {
 			nums: []int{-3, 3, 4, -3, 1, 2},
 			want: [][]int{{-3, 1, 2}},
+		},
+		"contains multiple duplicates": {
+			nums: []int{-2, -2, 0, 0, 2, 2},
+			want: [][]int{{-2, 0, 2}},
 		},
 	}
 
