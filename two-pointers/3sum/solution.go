@@ -21,20 +21,16 @@ func ThreeSum(nums []int) [][]int {
 
 			if threeSum > 0 {
 				right--
-				continue
-			}
-
-			if threeSum < 0 {
+			} else if threeSum < 0 {
 				left++
-				continue
-			}
-
-			res = append(res, []int{n, nums[left], nums[right]})
-			left++
-
-			// Shift only left pointer to avoid using the same value.
-			for left < right && nums[left] == nums[left-1] {
+			} else {
+				res = append(res, []int{n, nums[left], nums[right]})
 				left++
+
+				// Shift only left pointer to avoid using the same value.
+				for left < right && nums[left] == nums[left-1] {
+					left++
+				}
 			}
 		}
 	}
