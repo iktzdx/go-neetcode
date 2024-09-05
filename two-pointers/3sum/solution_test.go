@@ -25,6 +25,10 @@ func Test_ThreeSum(t *testing.T) {
 			nums: []int{0, 0, 0},
 			want: [][]int{{0, 0, 0}},
 		},
+		"contains duplicates": {
+			nums: []int{-3, 3, 4, -3, 1, 2},
+			want: [][]int{{-3, 1, 2}},
+		},
 	}
 
 	for name, test := range tests {
