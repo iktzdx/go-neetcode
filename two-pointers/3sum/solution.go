@@ -5,8 +5,12 @@ import "slices"
 func ThreeSum(nums []int) [][]int {
 	slices.Sort(nums)
 
-	var res [][]int
+	res := make([][]int, 0)
 	for i, n := range nums {
+		if n > 0 {
+			return res // There is no correct answer.
+		}
+
 		if i > 0 && n == nums[i-1] {
 			continue // Do not use the same value twice.
 		}
