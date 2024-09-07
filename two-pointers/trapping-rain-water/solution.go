@@ -1,24 +1,26 @@
 package trappingrainwater
 
 func Trap(height []int) int {
-	length := len(height)
+	var maxLeft, maxRight, out int
 
-	maxLeft := make([]int, length)
-	maxRight := make([]int, length)
+	left, right := 0, len(height)-1
+	for left < right {
+		if height[left] > height[right] {
+			val := maxRight - height[right]
+			if val > 0 {
+				out += val
+			}
 
-	for i := 1; i < length; i++ {
-		maxLeft[i] = max(maxLeft[i-1], height[i-1])
-	}
+			maxRight = max(maxRight, height[right])
+			right--
+		} else {
+			val := maxLeft - height[left]
+			if val > 0 {
+				out += val
+			}
 
-	for i := length - 2; i >= 0; i-- {
-		maxRight[i] = max(maxRight[i+1], height[i+1])
-	}
-
-	var out int
-	for i := 0; i < length; i++ {
-		val := min(maxLeft[i], maxRight[i]) - height[i]
-		if val > 0 {
-			out += val
+			maxLeft = max(maxLeft, height[left])
+			left++
 		}
 	}
 
