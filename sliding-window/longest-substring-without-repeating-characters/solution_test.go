@@ -39,6 +39,10 @@ func Test_LengthOfLongestSubstring(t *testing.T) {
 			input: "21!1t$4qq",
 			want:  6,
 		},
+		"two unique characters": {
+			input: "au",
+			want:  2,
+		},
 	}
 
 	for name, test := range tests {
