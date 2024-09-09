@@ -1,24 +1,20 @@
 package longestsubstringwithoutrepeatingcharacters
 
-import (
-	"slices"
-)
-
 func LengthOfLongestSubstring(s string) int {
 	if len(s) < 2 {
 		return len(s)
 	}
 
 	var result int
-	chars := make([]rune, 0)
+	chars := make(map[byte]bool, 0)
 
-	for _, ch := range s {
-		for slices.Contains(chars, ch) {
-			chars = chars[1:]
+	for l, r := 0, 0; r < len(s); r++ {
+		for ; chars[s[r]]; l++ {
+			delete(chars, s[l])
 		}
 
-		chars = append(chars, ch)
-		result = max(result, len(chars))
+		chars[s[r]] = true
+		result = max(result, r-l+1)
 	}
 
 	return result
