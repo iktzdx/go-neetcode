@@ -42,6 +42,11 @@ func Test_CharacterReplacement(t *testing.T) {
 			ops:   10,
 			want:  10, // all characters will be the same
 		},
+		"long string": {
+			input: "EOEMQLLQTRQDDCOERARHGAAARRBKCCMFTDAQOLOKARBIJBISTGNKBQGKKTALSQNFSABASNOPBMMGDIOETPTDICRBOMBAAHINTFLH",
+			ops:   7,
+			want:  11,
+		},
 	}
 
 	for name, test := range tests {
