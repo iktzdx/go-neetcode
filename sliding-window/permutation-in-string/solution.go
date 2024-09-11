@@ -1,28 +1,25 @@
 package permutationinstring
 
-import "reflect"
-
 func CheckInclusion(s1 string, s2 string) bool {
-	s1Count := make(map[byte]int, len(s1))
-	for i := 0; i < len(s1); i++ {
-		s1Count[s1[i]]++
+	if len(s1) > len(s2) {
+		return false
 	}
 
-	s2Count := make(map[byte]int, len(s1))
+	got, want := [26]int{}, [26]int{}
+	for _, ch := range s1 {
+		want[ch-'a']++
+	}
 
-	left := 0
-	for right := left + len(s1); right <= len(s2); right++ {
-		currWindow := s2[left:right]
-		for i := 0; i < len(currWindow); i++ {
-			s2Count[currWindow[i]]++
+	for right := range s2 {
+		if right >= len(s1) {
+			got[s2[right-len(s1)]-'a']--
 		}
 
-		if reflect.DeepEqual(s1Count, s2Count) {
+		got[s2[right]-'a']++
+		if got == want {
 			return true
 		}
 
-		clear(s2Count)
-		left++
 	}
 
 	return false
