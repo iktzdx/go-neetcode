@@ -37,6 +37,11 @@ func Test_CheckInclusion(t *testing.T) {
 			s2:   "abc",
 			want: true,
 		},
+		"s1 is longer": {
+			s1:   "abcd",
+			s2:   "abc",
+			want: false,
+		},
 	}
 
 	for name, test := range tests {
