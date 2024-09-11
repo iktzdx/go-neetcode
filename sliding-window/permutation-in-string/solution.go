@@ -5,21 +5,23 @@ func CheckInclusion(s1 string, s2 string) bool {
 		return false
 	}
 
-	got, want := [26]int{}, [26]int{}
+	count := [26]int{}
 	for _, ch := range s1 {
-		want[ch-'a']++
+		count[ch-'a']++
 	}
 
+	left := 0
 	for right := range s2 {
-		if right >= len(s1) {
-			got[s2[right-len(s1)]-'a']--
-		}
+		count[s2[right]-'a']--
 
-		got[s2[right]-'a']++
-		if got == want {
+		if count == [26]int{} {
 			return true
 		}
 
+		if right+1 >= len(s1) {
+			count[s2[left]-'a']++
+			left++
+		}
 	}
 
 	return false
