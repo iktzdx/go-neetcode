@@ -37,6 +37,21 @@ func Test_MinWindow(t *testing.T) {
 			t:    "aa",
 			want: "aa",
 		},
+		"duplicate characters": {
+			s:    "bbaa",
+			t:    "aba",
+			want: "baa",
+		},
+		"s is empty": {
+			s:    "",
+			t:    "xyz",
+			want: "",
+		},
+		"t is empty": {
+			s:    "zyx",
+			t:    "",
+			want: "",
+		},
 	}
 
 	for name, test := range tests {
