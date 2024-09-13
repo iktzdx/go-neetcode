@@ -6,21 +6,25 @@ func MaxSlidingWindow(nums []int, k int) []int {
 	}
 
 	result := make([]int, 0)
+	mdq := make([]int, 0) // store indexes
 
-	for left, right := 0, k; right <= len(nums); right++ {
-		result = append(result, findMaxValue(nums[left:right]))
-		left++
+	left, right := 0, 0
+	for right < len(nums) {
+		for len(mdq) > 0 && nums[mdq[len(mdq)-1]] < nums[right] {
+			mdq = mdq[:len(mdq)-1]
+		}
+		mdq = append(mdq, right)
+
+		if left > mdq[0] {
+			mdq = mdq[1:]
+		}
+
+		if (right + 1) >= k {
+			result = append(result, nums[mdq[0]])
+			left++
+		}
+		right++
 	}
 
 	return result
-}
-
-func findMaxValue(nums []int) int {
-    maxValue := nums[0]
-
-    for i:=0; i<len(nums); i++ {
-		maxValue = max(maxValue, nums[i])
-	}
-
-	return maxValue
 }
