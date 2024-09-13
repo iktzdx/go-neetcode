@@ -16,10 +16,10 @@ func MaxSlidingWindow(nums []int, k int) []int {
 }
 
 func findMaxValue(nums []int) int {
-	var maxValue int
+    maxValue := nums[0]
 
-	for _, n := range nums {
-		maxValue = max(maxValue, n)
+    for i:=0; i<len(nums); i++ {
+		maxValue = max(maxValue, nums[i])
 	}
 
 	return maxValue
