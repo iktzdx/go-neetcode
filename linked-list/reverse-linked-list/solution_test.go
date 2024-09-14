@@ -12,7 +12,7 @@ func Test_ReverseList(t *testing.T) {
 		head *solution.ListNode
 		want *solution.ListNode
 	}{
-		"long list": {
+		"list of 5 elements": {
 			head: &solution.ListNode{ // 1,2,3,4,5
 				Val: 1, Next: &solution.ListNode{
 					Val: 2, Next: &solution.ListNode{
@@ -36,7 +36,7 @@ func Test_ReverseList(t *testing.T) {
 				},
 			},
 		},
-		"short list": {
+		"list of 2 elements": {
 			head: &solution.ListNode{ // 2,1
 				Val: 2, Next: &solution.ListNode{
 					Val: 1, Next: nil,
@@ -48,11 +48,11 @@ func Test_ReverseList(t *testing.T) {
 				},
 			},
 		},
-		"empty list": {
-			head: &solution.ListNode{},
-			want: &solution.ListNode{},
+		"list of 1 element": {
+			head: &solution.ListNode{Val: 1, Next: nil},
+			want: &solution.ListNode{Val: 1, Next: nil},
 		},
-		"head is nil": {
+		"empty list": {
 			head: nil,
 			want: nil,
 		},
