@@ -52,6 +52,10 @@ func Test_ReverseList(t *testing.T) {
 			head: &solution.ListNode{},
 			want: &solution.ListNode{},
 		},
+		"head is nil": {
+			head: nil,
+			want: nil,
+		},
 	}
 
 	for name, test := range tests {
