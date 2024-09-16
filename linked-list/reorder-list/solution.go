@@ -6,48 +6,26 @@ type ListNode struct {
 }
 
 func ReorderList(head *ListNode) {
-	mid := findMidNode(head)
-	newHead := mid.Next
-	mid.Next = nil
-
-	newHead = reverseLinkedList(newHead)
-
-	c1, c2 := head, newHead
-	var f1, f2 *ListNode
-
-	for c1 != nil && c2 != nil {
-		f1 = c1.Next
-		f2 = c2.Next
-
-		c1.Next = c2
-		c2.Next = f1
-
-		c1 = f1
-		c2 = f2
-	}
-}
-
-func findMidNode(head *ListNode) *ListNode {
-	slow, fast := head, head
-
-	for fast.Next != nil && fast.Next.Next != nil {
+	// Find middle
+	slow, fast := head, head.Next
+	for fast != nil && fast.Next != nil {
 		slow = slow.Next
 		fast = fast.Next.Next
 	}
 
-	return slow
-}
+	// Reverse second part
+	var prev, second *ListNode
+	second, slow.Next = slow.Next, nil
 
-func reverseLinkedList(head *ListNode) *ListNode {
-	var prev, frw *ListNode
-	curr := head
-
-	for curr != nil {
-		frw = curr.Next
-		curr.Next = prev
-		prev = curr
-		curr = frw
+	for second != nil {
+		second.Next, prev, second = prev, second, second.Next
 	}
 
-	return prev
+	second = prev
+
+	// Merge
+	first := head
+	for second != nil {
+		first.Next, second.Next, first, second = second, first.Next, first.Next, second.Next
+	}
 }
