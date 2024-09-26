@@ -2,30 +2,18 @@ package searcha2dmatrix
 
 func SearchMatrix(matrix [][]int, target int) bool {
 	rows, cols := len(matrix), len(matrix[0])
-	top, bottom, curr := 0, rows-1, 0
 
-	if target > matrix[bottom][cols-1] {
+	if target > matrix[rows-1][cols-1] {
 		return false
 	}
 
-	for top <= bottom {
-		curr = top + ((bottom - top) / 2)
-		row := matrix[curr]
-
-		if target == row[0] || target == row[cols-1] {
-			return true
-		}
-
-		if target > row[cols-1] {
-			top = curr + 1
-		} else if target < row[0] {
-			bottom = curr - 1
-		} else {
-			break
+	for i := range rows {
+		if matrix[i][0] <= target && target <= matrix[i][cols-1] {
+			return search(matrix[i], target)
 		}
 	}
 
-	return search(matrix[curr], target)
+	return false
 }
 
 func search(row []int, target int) bool {
