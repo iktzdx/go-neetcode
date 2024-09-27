@@ -6,19 +6,24 @@ import (
 )
 
 func MinEatingSpeed(piles []int, h int) int {
-	var speed int
+	left, right := 1, slices.Max(piles)
+	result := right
 
-	for speed = 1; speed <= slices.Max(piles); speed++ {
+	for left <= right {
+		k := left + (right-left)/2
+
 		hours := 0
-
 		for _, pile := range piles {
-			hours += int(math.Ceil(float64(pile) / float64(speed)))
+			hours += int(math.Ceil(float64(pile) / float64(k)))
 		}
 
 		if hours <= h {
-			break
+			result = min(result, k)
+			right = k - 1
+		} else {
+			left = k + 1
 		}
 	}
 
-	return speed
+	return result
 }
