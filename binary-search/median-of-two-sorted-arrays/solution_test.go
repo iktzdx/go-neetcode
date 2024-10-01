@@ -37,6 +37,26 @@ func Test_FindMedianSortedArrays(t *testing.T) {
 			nums2: []int{1},
 			want:  1,
 		},
+		"case #6 - odd length, contains duplicates after merge": {
+			nums1: []int{1, 2, 3, 4, 5},
+			nums2: []int{1, 2, 3, 4, 5, 6, 7, 8},
+			want:  4,
+		},
+		"case #7 - even length, contains duplicates after merge": {
+			nums1: []int{1, 2, 3, 4},
+			nums2: []int{1, 2, 3, 4, 5, 6, 7, 8},
+			want:  3.5,
+		},
+		"case #8 - the most right values of the left partitions are different": {
+			nums1: []int{1, 2, 4, 4},
+			nums2: []int{1, 2, 3, 4, 5, 6, 7, 8},
+			want:  4, // [1 1 2 2 3 4 4 4 5 6 7 8], max(4,3) + min(4,4) / 2
+		},
+		"case #9 - the most left values of the right partitions are different": {
+			nums1: []int{1, 2, 3, 3},
+			nums2: []int{1, 2, 3, 4, 5, 6, 7, 8},
+			want:  3, // [1 1 2 2 3 3 3 4 5 6 7 8], max(3,3) + min(3,4) / 2
+		},
 	}
 
 	for name, test := range tests {
