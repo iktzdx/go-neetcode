@@ -2,28 +2,33 @@ package maximumdepthofbinarytree
 
 import "github.com/iktzdx/go-neetcode/trees"
 
+type value struct {
+	depth int
+	node  *trees.TreeNode
+}
+
 func MaxDepth(root *trees.TreeNode) int {
+	var result int
+
 	if root == nil {
-		return 0
+		return result
 	}
 
-	level := 0
-	queue := []*trees.TreeNode{root}
+	s := []*value{{depth: 1, node: root}}
+	result = len(s)
 
-	for len(queue) > 0 {
-		for range len(queue) {
-			var node *trees.TreeNode
-			node, queue = queue[0], queue[1:]
+	for len(s) > 0 {
+		node, depth := s[len(s)-1].node, s[len(s)-1].depth
+		s = s[:len(s)-1]
 
-			if node.Left != nil {
-				queue = append(queue, node.Left)
-			}
-			if node.Right != nil {
-				queue = append(queue, node.Right)
-			}
+		if node != nil {
+			result = max(result, depth)
+			s = append(s,
+				&value{node: node.Left, depth: depth + 1},
+				&value{node: node.Right, depth: depth + 1},
+			)
 		}
-		level++
 	}
 
-	return level
+	return result
 }
