@@ -1,0 +1,44 @@
+---
+run:
+  go: "1.23"
+  build-tags:
+    - mock
+    - integration
+linters:
+  enable-all: true
+  disable:
+    - cyclop
+    - execinquery
+    - exhaustruct
+    - exportloopref
+    - funlen
+    - gocritic
+    - gomnd
+    - mnd
+    - paralleltest
+    - tagalign
+    - varnamelen
+linters-settings:
+  revive:
+    rules:
+      - name: unexported-return
+        disabled: true
+  misspell:
+    locale: US
+  gci:
+    sections:
+      - standard
+      - default
+      - prefix(github.com/iktzdx)
+      - localmodule
+  lll:
+    line-length: 120
+  depguard:
+    rules:
+      main:
+        allow:
+          - $gostd
+          - github.com
+issues:
+  exclude-dirs:
+    - vendor

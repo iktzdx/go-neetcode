@@ -66,4 +66,3 @@ func Test_LongestConsecutive(t *testing.T) {
 		})
 	}
 }
-

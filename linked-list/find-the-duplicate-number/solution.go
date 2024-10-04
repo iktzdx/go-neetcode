@@ -7,6 +7,7 @@ func FindDuplicate(nums []int) int {
 	for {
 		slow = nums[slow]
 		fast = nums[nums[fast]]
+
 		if slow == fast {
 			break
 		}
@@ -14,9 +15,11 @@ func FindDuplicate(nums []int) int {
 
 	// Find the entrance to the cycle.
 	var slow2 int
+
 	for {
 		slow = nums[slow]
 		slow2 = nums[slow2]
+
 		if slow == slow2 {
 			break
 		}

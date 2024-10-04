@@ -6,6 +6,7 @@ func ThreeSum(nums []int) [][]int {
 	slices.Sort(nums)
 
 	res := make([][]int, 0)
+
 	for i, n := range nums {
 		if n > 0 {
 			return res // There is no correct answer.

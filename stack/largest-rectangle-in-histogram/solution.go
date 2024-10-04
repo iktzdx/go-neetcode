@@ -1,6 +1,8 @@
 package largestrectangleinhistogram
 
 func LargestRectangleArea(heights []int) int {
+	var maxArea int
+
 	if len(heights) < 2 {
 		return heights[0]
 	}
@@ -8,8 +10,7 @@ func LargestRectangleArea(heights []int) int {
 	// Append a zero height to ensure we can process all bars in the stack.
 	heights = append(heights, 0)
 
-	var maxArea int
-	var stack []int // store only indices
+	stack := make([]int, 0) // store only indices
 
 	for i, h := range heights {
 		// While the current height is less than the height of the bar at the index

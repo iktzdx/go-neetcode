@@ -16,6 +16,7 @@ func TopKFrequent(nums []int, k int) []int {
 	}
 
 	result := make([]int, 0)
+
 	for i := len(bucket) - 1; i > 0; i-- {
 		if len(bucket[i]) == 0 {
 			continue

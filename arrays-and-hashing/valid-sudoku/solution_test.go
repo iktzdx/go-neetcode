@@ -208,17 +208,22 @@ func Test_IsValidSudoku(t *testing.T) {
 
 func formatBoard(board [][]byte) string {
 	result := "\n"
-	for i := 0; i < len(board); i++ {
+
+	for i := range board {
 		if i%3 == 0 && i != 0 {
 			result += "------|------|------\n"
 		}
-		for j := 0; j < len(board[i]); j++ {
+
+		for j := range board[i] {
 			if j%3 == 0 && j != 0 {
 				result += "|"
 			}
+
 			result += string(board[i][j]) + " "
 		}
+
 		result += "\n"
 	}
+
 	return result
 }

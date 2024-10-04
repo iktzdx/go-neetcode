@@ -13,11 +13,13 @@ func TwoSum(numbers []int, target int) []int {
 
 		if sum > target {
 			right--
+
 			continue
 		}
 
 		if sum < target {
 			left++
+
 			continue
 		}
 

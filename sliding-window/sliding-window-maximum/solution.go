@@ -13,6 +13,7 @@ func MaxSlidingWindow(nums []int, k int) []int {
 		for len(mdq) > 0 && nums[mdq[len(mdq)-1]] < nums[right] {
 			mdq = mdq[:len(mdq)-1]
 		}
+
 		mdq = append(mdq, right)
 
 		if left > mdq[0] {
@@ -23,6 +24,7 @@ func MaxSlidingWindow(nums []int, k int) []int {
 			result = append(result, nums[mdq[0]])
 			left++
 		}
+
 		right++
 	}
 

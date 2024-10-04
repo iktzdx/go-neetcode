@@ -61,6 +61,7 @@ func Test_ReorderList(t *testing.T) {
 	for name, test := range tests {
 		t.Run(name, func(t *testing.T) {
 			solution.ReorderList(test.head)
+
 			if !reflect.DeepEqual(test.want, test.head) {
 				t.Fatalf("ReorderList(...): expected = %v, got = %v", test.want, test.head)
 			}

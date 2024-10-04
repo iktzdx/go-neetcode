@@ -3,8 +3,9 @@ package topkelementsinlist_test
 import (
 	"testing"
 
-	solution "github.com/iktzdx/go-neetcode/arrays-and-hashing/top-k-elements-in-list"
 	"github.com/stretchr/testify/assert"
+
+	solution "github.com/iktzdx/go-neetcode/arrays-and-hashing/top-k-elements-in-list"
 )
 
 func TestTopKFrequent(t *testing.T) {

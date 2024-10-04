@@ -59,6 +59,7 @@ func sliceToMap(ss [][]string) map[string]int {
 
 	for _, s := range ss {
 		slices.Sort(s)
+
 		m[fmt.Sprint(s)]++
 	}
 

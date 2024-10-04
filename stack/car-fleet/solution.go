@@ -1,6 +1,11 @@
 package carfleet
 
 func CarFleet(target int, position []int, speed []int) int {
+	var (
+		fleets  int
+		fastest float32
+	)
+
 	if len(position) < 2 {
 		return 1
 	}
@@ -10,8 +15,6 @@ func CarFleet(target int, position []int, speed []int) int {
 		times[pos] = float32(target-pos) / float32(speed[idx])
 	}
 
-	var fleets int
-	var fastest float32
 	for i := target - 1; i >= 0; i-- {
 		if times[i] > fastest {
 			fastest = times[i]

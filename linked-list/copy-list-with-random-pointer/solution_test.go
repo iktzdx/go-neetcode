@@ -49,8 +49,10 @@ func linkedListRandomToArray(head *solution.Node) [][]int {
 	curr := head
 	nodes := map[*solution.Node]int{}
 	i := 0
+
 	for curr != nil {
 		nodes[curr] = i
+
 		result = append(result, []int{curr.Val, null})
 		curr = curr.Next
 		i++
@@ -62,6 +64,7 @@ func linkedListRandomToArray(head *solution.Node) [][]int {
 		if curr.Random != nil {
 			result[i][1] = nodes[curr.Random]
 		}
+
 		curr = curr.Next
 	}
 
@@ -72,13 +75,16 @@ func linkedListRandomFromArray(arr [][]int) *solution.Node {
 	if len(arr) == 0 {
 		return nil
 	}
+
 	head := &solution.Node{
 		Val: arr[0][0],
 	}
+
 	nodes := map[int]*solution.Node{0: head}
 
 	// Build the linked list
 	curr := head
+
 	for i := 1; i < len(arr); i++ {
 		next := &solution.Node{Val: arr[i][0]}
 		nodes[i] = next
@@ -88,13 +94,16 @@ func linkedListRandomFromArray(arr [][]int) *solution.Node {
 
 	// set up randoms
 	curr = head
-	for i := 0; i < len(arr); i++ {
+
+	for i := range arr {
 		if arr[i][1] != null {
 			if randNode, ok := nodes[arr[i][1]]; ok {
 				curr.Random = randNode
 			}
 		}
+
 		curr = curr.Next
 	}
+
 	return head
 }
