@@ -7,15 +7,17 @@ run:
 linters:
   enable-all: true
   disable:
-    - gomnd
+    - cyclop
     - execinquery
     - exhaustruct
     - exportloopref
-    - gocritic
     - funlen
-    - varnamelen
-    - tagalign
+    - gocritic
+    - gomnd
+    - mnd
     - paralleltest
+    - tagalign
+    - varnamelen
 linters-settings:
   revive:
     rules:
