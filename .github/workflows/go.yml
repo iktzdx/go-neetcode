@@ -2,7 +2,7 @@
 ---
 name: golang
 
-on: [push]
+on: [push, pull_request]
 
 env:
   GO_VERSION: stable
