@@ -51,7 +51,7 @@ jobs:
           go-version: ${{ matrix.go-version }}
 
       - name: run tests and generate test coverage
-        run: go test -v -cover -coverprofile=./cover.out -covermode=atomic -coverpkg=./... -race -count $(nproc) ./...
+        run: go test -cover -coverprofile=./cover.out -covermode=atomic -race -count $(nproc) ./...
 
       - name: check test coverage
         uses: vladopajic/go-test-coverage@v2
