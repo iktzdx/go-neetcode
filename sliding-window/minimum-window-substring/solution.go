@@ -39,6 +39,7 @@ func MinWindow(s string, t string) string {
 			if need[ch] == 0 {
 				needCount++
 			}
+
 			need[ch]++
 			left++
 		}

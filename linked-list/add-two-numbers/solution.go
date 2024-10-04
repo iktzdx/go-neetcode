@@ -19,6 +19,7 @@ func AddTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 			sum += l1.Val
 			l1 = l1.Next
 		}
+
 		if l2 != nil {
 			sum += l2.Val
 			l2 = l2.Next

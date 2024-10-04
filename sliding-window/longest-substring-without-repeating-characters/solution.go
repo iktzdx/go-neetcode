@@ -1,11 +1,12 @@
 package longestsubstringwithoutrepeatingcharacters
 
 func LengthOfLongestSubstring(s string) int {
+	var result int
+
 	if len(s) < 2 {
 		return len(s)
 	}
 
-	var result int
 	chars := make(map[byte]bool, 0)
 
 	for l, r := 0, 0; r < len(s); r++ {

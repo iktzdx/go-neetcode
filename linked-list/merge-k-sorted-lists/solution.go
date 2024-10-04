@@ -17,6 +17,7 @@ func MergeKLists(lists []*ListNode) *ListNode {
 			var l1, l2 *ListNode
 
 			l1 = lists[i]
+
 			if (i + 1) < len(lists) {
 				l2 = lists[i+1]
 			}

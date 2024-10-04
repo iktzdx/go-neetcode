@@ -3,8 +3,9 @@ package generateparentheses_test
 import (
 	"testing"
 
-	solution "github.com/iktzdx/go-neetcode/stack/generate-parentheses"
 	"github.com/stretchr/testify/assert"
+
+	solution "github.com/iktzdx/go-neetcode/stack/generate-parentheses"
 )
 
 func Test_GenerateParenthesis(t *testing.T) {

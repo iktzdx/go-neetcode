@@ -10,7 +10,7 @@ func Search(nums []int, target int) int {
 			return mid
 		}
 
-		if nums[mid] >= nums[left] {
+		if nums[mid] >= nums[left] { //nolint:nestif
 			if target > nums[mid] || target < nums[left] {
 				left = mid + 1
 			} else {

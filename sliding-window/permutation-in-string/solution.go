@@ -11,6 +11,7 @@ func CheckInclusion(s1 string, s2 string) bool {
 	}
 
 	left := 0
+
 	for right := range s2 {
 		count[s2[right]-'a']--
 

@@ -13,8 +13,8 @@ func IsValidSudoku(board [][]byte) bool {
 		boxes [boxSideLength][boxSideLength][boardSideLength]bool
 	)
 
-	for row := 0; row < boardSideLength; row++ {
-		for col := 0; col < boardSideLength; col++ {
+	for row := range boardSideLength {
+		for col := range boardSideLength {
 			if board[row][col] == emptyCell {
 				continue
 			}

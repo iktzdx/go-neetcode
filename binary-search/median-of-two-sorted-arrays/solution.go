@@ -28,6 +28,7 @@ func FindMedianSortedArrays(nums1 []int, nums2 []int) float64 {
 		if i > 0 {
 			sLeft = smaller[i-1]
 		}
+
 		if i < len(smaller) {
 			sRight = smaller[i]
 		}
@@ -35,6 +36,7 @@ func FindMedianSortedArrays(nums1 []int, nums2 []int) float64 {
 		if j > 0 {
 			bLeft = bigger[j-1]
 		}
+
 		if j < len(bigger) {
 			bRight = bigger[j]
 		}

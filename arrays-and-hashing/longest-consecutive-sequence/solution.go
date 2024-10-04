@@ -11,6 +11,7 @@ func LongestConsecutive(nums []int) int {
 	}
 
 	longest := 1
+
 	for n := range numsMap { // loop through the map is faster
 		if numsMap[n+1] { // search for the end of the sequence
 			continue
