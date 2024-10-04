@@ -1,4 +1,4 @@
-# This workflow will lint and test a golang project
+# This workflow will lint, test and generate coverage for a golang project.
 ---
 name: golang
 
@@ -49,5 +49,15 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: ${{ matrix.go-version }}
-      - name: go test
-        run: go test -v -cover -race -count $(nproc) ./...
+
+      - name: run tests and generate test coverage
+        run: go test -v -cover -coverprofile=./cover.out -covermode=atomic -coverpkg=./... -race -count $(nproc) ./...
+
+      - name: check test coverage
+        uses: vladopajic/go-test-coverage@v2
+        with:
+          profile: cover.out
+          local-prefix: github.com/iktzdx/go-neetcode
+          threshold-file: 70
+          threshold-package: 80
+          threshold-total: 95
