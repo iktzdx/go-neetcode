@@ -1,34 +1,32 @@
 package binarytreerightsideview
 
-import "github.com/iktzdx/go-neetcode/trees"
+import (
+	"github.com/iktzdx/go-neetcode/trees"
+)
+
+type dfsFunc func(root *trees.TreeNode, lvl int)
 
 func RightSideView(root *trees.TreeNode) []int {
+	var dfs dfsFunc
+
 	result := make([]int, 0)
 
-	q := []*trees.TreeNode{root}
-
-	// For each level of the tree we want
-	// the right most node.
-	for len(q) > 0 {
-		var rightNode *trees.TreeNode
-
-		for range len(q) {
-			var node *trees.TreeNode
-
-			node, q = q[0], q[1:]
-
-			if node != nil {
-				rightNode = node
-
-				q = append(q, node.Left)
-				q = append(q, node.Right)
-			}
+	dfs = func(root *trees.TreeNode, lvl int) {
+		if root == nil {
+			return
 		}
 
-		if rightNode != nil {
-			result = append(result, rightNode.Val)
+		if lvl > len(result) {
+			result = append(result, root.Val)
 		}
+
+		lvl++
+
+		dfs(root.Right, lvl)
+		dfs(root.Left, lvl)
 	}
+
+	dfs(root, 1)
 
 	return result
 }
