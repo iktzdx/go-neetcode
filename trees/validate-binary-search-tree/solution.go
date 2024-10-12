@@ -6,18 +6,27 @@ import (
 	"github.com/iktzdx/go-neetcode/trees"
 )
 
+type dfsFunc func(*trees.TreeNode) bool
+
 func IsValidBST(root *trees.TreeNode) bool {
-	return dfs(root, math.MinInt, math.MaxInt)
-}
+	var dfs dfsFunc
 
-func dfs(node *trees.TreeNode, left, right int) bool {
-	if node == nil {
-		return true
+	prev := math.MinInt
+
+	dfs = func(node *trees.TreeNode) bool {
+		if node == nil {
+			return true
+		}
+
+		isValid := dfs(node.Left)
+		if !isValid || node.Val <= prev {
+			return false
+		}
+
+		prev = node.Val
+
+		return dfs(node.Right)
 	}
 
-	if node.Val >= right || node.Val <= left {
-		return false
-	}
-
-	return dfs(node.Left, left, node.Val) && dfs(node.Right, node.Val, right)
+	return dfs(root)
 }
