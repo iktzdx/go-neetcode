@@ -1,31 +1,28 @@
 package binarytreemaximumpathsum
 
-import "github.com/iktzdx/go-neetcode/trees"
+import (
+	"math"
 
-type dfsFunc func(*trees.TreeNode) int
+	"github.com/iktzdx/go-neetcode/trees"
+)
 
 func MaxPathSum(root *trees.TreeNode) int {
-	var (
-		res int
-		dfs dfsFunc
-	)
+	result := math.MinInt
+	dfs(root, &result)
 
-	// Return the max path sum without split.
-	dfs = func(node *trees.TreeNode) int {
-		if node == nil {
-			return 0
-		}
+	return result
+}
 
-		left := max(dfs(node.Left), 0)
-		right := max(dfs(node.Right), 0)
-
-		// Calculate max path sum with split.
-		res = max(res, (node.Val + left + right))
-
-		return node.Val + max(left, right)
+func dfs(node *trees.TreeNode, result *int) int {
+	if node == nil {
+		return 0
 	}
 
-	dfs(root)
+	left := dfs(node.Left, result)
+	right := dfs(node.Right, result)
 
-	return res
+	// Calculate max path sum with split.
+	*result = max(*result, (node.Val + left + right))
+
+	return max(0, max(left+node.Val, right+node.Val))
 }
