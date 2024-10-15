@@ -32,6 +32,10 @@ func Test_MaxPathSum(t *testing.T) {
 			root: []int{-1, 2, 3},
 			want: 4,
 		},
+		"case #6": {
+			root: []int{-3},
+			want: -3,
+		},
 	}
 
 	for name, test := range tests {
