@@ -1,6 +1,8 @@
 package nqueens
 
-import "strings"
+import (
+	"strings"
+)
 
 const (
 	figure = "Q"
@@ -9,9 +11,9 @@ const (
 
 type (
 	node struct {
-		cols     map[int]bool
-		posDiags map[int]bool // (row + col)
-		negDiags map[int]bool // (row - col)
+		cols    []bool
+		posDiag []bool // row + col
+		negDiag []bool // row - col
 	}
 
 	backtracking func(row int)
@@ -22,9 +24,9 @@ func SolveNQueens(n int) [][]string {
 	b := board(n)
 
 	nn := node{
-		cols:     make(map[int]bool),
-		posDiags: make(map[int]bool),
-		negDiags: make(map[int]bool),
+		cols:    make([]bool, n),
+		posDiag: make([]bool, 2*n),
+		negDiag: make([]bool, 2*n),
 	}
 
 	var backtrack backtracking
@@ -43,22 +45,19 @@ func SolveNQueens(n int) [][]string {
 		}
 
 		for col := range n {
-			if nn.cols[col] || nn.posDiags[row+col] || nn.negDiags[row-col] {
+			// Check if valid placement.
+			if nn.cols[col] || nn.posDiag[row+col] || nn.negDiag[row-col+n] {
 				continue
 			}
 
-			nn.cols[col] = true
-			nn.posDiags[row+col] = true
-			nn.negDiags[row-col] = true
-
+			// Place the Queen.
+			nn.cols[col], nn.posDiag[row+col], nn.negDiag[row-col+n] = true, true, true
 			b[row][col] = figure
 
 			backtrack(row + 1)
 
-			nn.cols[col] = false
-			nn.posDiags[row+col] = false
-			nn.negDiags[row-col] = false
-
+			// Undo changes.
+			nn.cols[col], nn.posDiag[row+col], nn.negDiag[row-col+n] = false, false, false
 			b[row][col] = empty
 		}
 	}
