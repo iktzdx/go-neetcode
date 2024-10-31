@@ -4,53 +4,62 @@ import (
 	"container/heap"
 )
 
+type point struct {
+	dist int
+	x    int
+	y    int
+}
+
 func KClosest(points [][]int, k int) [][]int {
-	h := &minHeap{}
+	h := &pointHeap{}
 
 	heap.Init(h)
 
 	for _, pt := range points {
 		x, y := pt[0], pt[1]
-
 		dist := (x * x) + (y * y)
-		heap.Push(h, []int{dist, x, y})
+
+		heap.Push(h, point{dist, x, y})
+
+		if h.Len() > k {
+			heap.Pop(h)
+		}
 	}
 
 	result := make([][]int, 0)
 
 	for k > 0 {
-		val := heap.Pop(h)
+		p, _ := heap.Pop(h).(point)
 
-		pts, _ := val.([]int)
+		result = append(result, []int{p.x, p.y})
 
-		result = append(result, []int{pts[1], pts[2]})
 		k--
 	}
 
 	return result
 }
 
-type minHeap [][]int
+type pointHeap []point
 
-func (h minHeap) Len() int {
+func (h pointHeap) Len() int {
 	return len(h)
 }
 
-func (h minHeap) Less(i, j int) bool {
-	return h[i][0] < h[j][0]
+func (h pointHeap) Less(i, j int) bool {
+	return h[i].dist > h[j].dist
 }
 
-func (h minHeap) Swap(i, j int) {
+func (h pointHeap) Swap(i, j int) {
 	h[i], h[j] = h[j], h[i]
 }
 
-func (h *minHeap) Push(x interface{}) {
-	val, _ := x.([]int)
+func (h *pointHeap) Push(x interface{}) {
+	val, _ := x.(point)
 
 	*h = append(*h, val)
 }
 
-func (h *minHeap) Pop() interface{} {
+func (h *pointHeap) Pop() interface{} {
 	popped := (*h)[len(*h)-1]
 
 	*h = (*h)[:len(*h)-1]
