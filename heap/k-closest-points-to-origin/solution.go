@@ -1,68 +1,34 @@
 package kclosestpointstoorigin
 
 import (
-	"container/heap"
+	"sort"
 )
 
 type point struct {
-	dist int
-	x    int
-	y    int
+	dist   int
+	coords []int
 }
 
 func KClosest(points [][]int, k int) [][]int {
-	h := &pointHeap{}
+	pts := make([]point, len(points))
 
-	heap.Init(h)
-
-	for _, pt := range points {
-		x, y := pt[0], pt[1]
-		dist := (x * x) + (y * y)
-
-		heap.Push(h, point{dist, x, y})
-
-		if h.Len() > k {
-			heap.Pop(h)
-		}
+	for i, pt := range points {
+		pts[i] = point{calcDist(pt[0], pt[1]), []int{pt[0], pt[1]}}
 	}
+
+	sort.Slice(pts, func(i, j int) bool {
+		return pts[i].dist < pts[j].dist
+	})
 
 	result := make([][]int, 0)
 
-	for k > 0 {
-		p, _ := heap.Pop(h).(point)
-
-		result = append(result, []int{p.x, p.y})
-
-		k--
+	for i := range k {
+		result = append(result, pts[i].coords)
 	}
 
 	return result
 }
 
-type pointHeap []point
-
-func (h pointHeap) Len() int {
-	return len(h)
-}
-
-func (h pointHeap) Less(i, j int) bool {
-	return h[i].dist > h[j].dist
-}
-
-func (h pointHeap) Swap(i, j int) {
-	h[i], h[j] = h[j], h[i]
-}
-
-func (h *pointHeap) Push(x interface{}) {
-	val, _ := x.(point)
-
-	*h = append(*h, val)
-}
-
-func (h *pointHeap) Pop() interface{} {
-	popped := (*h)[len(*h)-1]
-
-	*h = (*h)[:len(*h)-1]
-
-	return popped
+func calcDist(x, y int) int {
+	return (x * x) + (y * y)
 }
