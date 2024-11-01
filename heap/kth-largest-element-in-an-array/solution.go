@@ -1,47 +1,32 @@
 package kthlargestelementinanarray
 
-import "container/heap"
+type quickSelectFunc func(l, r int) int
 
 func FindKthLargest(nums []int, k int) int {
-	h := &numsHeap{}
+	k = len(nums) - k
 
-	heap.Init(h)
+	var qs quickSelectFunc
 
-	for _, num := range nums {
-		heap.Push(h, num)
+	qs = func(l, r int) int {
+		pivot, p := nums[r], l
 
-		if k < h.Len() {
-			heap.Pop(h)
+		for i := l; i < r; i++ {
+			if nums[i] <= pivot {
+				nums[p], nums[i] = nums[i], nums[p]
+				p++
+			}
+		}
+
+		nums[p], nums[r] = nums[r], nums[p]
+
+		if p > k {
+			return qs(l, p-1)
+		} else if p < k {
+			return qs(p+1, r)
+		} else {
+			return nums[p]
 		}
 	}
 
-	return (*h)[0]
-}
-
-type numsHeap []int
-
-func (h numsHeap) Len() int {
-	return len(h)
-}
-
-func (h numsHeap) Less(i, j int) bool {
-	return h[i] < h[j]
-}
-
-func (h numsHeap) Swap(i, j int) {
-	h[i], h[j] = h[j], h[i]
-}
-
-func (h *numsHeap) Push(x interface{}) {
-	val, _ := x.(int)
-
-	*h = append(*h, val)
-}
-
-func (h *numsHeap) Pop() interface{} {
-	popped := (*h)[len(*h)-1]
-
-	*h = (*h)[:len(*h)-1]
-
-	return popped
+	return qs(0, len(nums)-1)
 }
