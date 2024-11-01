@@ -9,16 +9,13 @@ func FindKthLargest(nums []int, k int) int {
 
 	for _, num := range nums {
 		heap.Push(h, num)
+
+		if k < h.Len() {
+			heap.Pop(h)
+		}
 	}
 
-	var result int
-	for k > 0 {
-		result, _ = heap.Pop(h).(int)
-
-		k--
-	}
-
-	return result
+	return (*h)[0]
 }
 
 type numsHeap []int
@@ -28,7 +25,7 @@ func (h numsHeap) Len() int {
 }
 
 func (h numsHeap) Less(i, j int) bool {
-	return h[i] > h[j]
+	return h[i] < h[j]
 }
 
 func (h numsHeap) Swap(i, j int) {
