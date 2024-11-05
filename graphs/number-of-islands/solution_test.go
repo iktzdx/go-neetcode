@@ -47,6 +47,10 @@ func Test_NumIslands(t *testing.T) {
 			},
 			want: 1,
 		},
+		"case #5": {
+			grid: [][]byte{},
+			want: 0,
+		},
 	}
 
 	for name, test := range tests {
