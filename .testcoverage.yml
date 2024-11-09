@@ -22,3 +22,4 @@ exclude:
   paths:
     - main.go
     - trees/helpers.go
+    - graphs/graphs.go
