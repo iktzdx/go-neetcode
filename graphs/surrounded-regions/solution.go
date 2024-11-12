@@ -1,9 +1,5 @@
 package surroundedregions
 
-type coords struct {
-	row, col int
-}
-
 type dfsFunc func(r, c int)
 
 const (
