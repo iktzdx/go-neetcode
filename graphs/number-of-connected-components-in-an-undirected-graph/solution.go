@@ -1,42 +1,50 @@
 package numberofconnectedcomponentsinanundirectedgraph
 
-type dfsFunc func(int)
-
 func CountComponents(n int, edges [][]int) int {
-	var (
-		dfs   dfsFunc
-		count int
-	)
+	connected := n
 
-	adj := make([][]int, n)
-	visited := make([]bool, n)
+	par := make([]int, n) // idx - node, par[idx] - node's parent.
+	for idx := range n {
+		par[idx] = idx // each node is the parent of itself initially.
+	}
+
+	rank := make([]int, n) // idx - parent, rank[idx] - size of connected component.
+
+	find := func(node int) int {
+		root := node
+
+		for root != par[root] {
+			// path compression
+			par[root] = par[par[root]]
+
+			root = par[root]
+		}
+
+		return root
+	}
+
+	union := func(node1, node2 int) int {
+		p1, p2 := find(node1), find(node2)
+
+		if p1 == p2 {
+			return 0
+		}
+
+		if rank[p2] > rank[p1] {
+			p1, p2 = p2, p1
+		}
+
+		par[p2] = p1
+		rank[p1] += rank[p2]
+
+		return 1
+	}
 
 	for _, edge := range edges {
-		u, v := edge[0], edge[1]
+		node1, node2 := edge[0], edge[1]
 
-		adj[u] = append(adj[u], v)
-		adj[v] = append(adj[v], u)
+		connected -= union(node1, node2)
 	}
 
-	dfs = func(node int) {
-		for _, nei := range adj[node] {
-			if !visited[nei] {
-				visited[nei] = true
-
-				dfs(nei)
-			}
-		}
-	}
-
-	for node := range n {
-		if !visited[node] {
-			visited[node] = true
-
-			dfs(node)
-
-			count++
-		}
-	}
-
-	return count
+	return connected
 }
